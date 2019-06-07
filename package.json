@@ -11,8 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browserify": "^16.2.3",
-    "node-rsa": "^1.0.5",
+    "node-rsa": "^1.0.5"
+  },
+  "devDependencies": {
     "watchify": "^3.11.1"
   }
 }

@@ -1,30 +1,51 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-document.getElementById("credentials").addEventListener('click', getCredentials);
 const NodeRSA = require('node-rsa')
 
-function generateRSAKeyPairs () {
-  const key = new NodeRSA({b: 1024});
+const server = "http://localhost:3000"
+
+function generateRSAKeyPairs() {
+  const key = new NodeRSA({ b: 1024 });
   const publicKey = key.exportKey('pkcs8-public-pem');
   const privateKey = key.exportKey('pkcs8-private-pem')
   return { publicKey, privateKey }
 
 }
 
-function getCredentials (){
+const result = document.getElementById('result');
+const publicKeyEl = document.getElementById('public-key');
+const privateKeyEl = document.getElementById('private-key');
+document.getElementById('form').onsubmit = getCredentials;
+
+function getCredentials(e) {
+  e.preventDefault();
   const { publicKey, privateKey } = generateRSAKeyPairs()
+  publicKeyEl.innerText = publicKey;
+  privateKeyEl.innerText = privateKey;
 
-  const publicKeyDisplay = publicKey.slice(26,247);
-  const privateKeyDisplay = privateKey.slice(27,890);
-   
-  console.log(publicKeyDisplay);
-    document.getElementById('public-key').innerHTML=
-    `<label for="Public-Key"> Public Key </label>
-    <textarea class= "form-control" id="public-key">${publicKeyDisplay}</textarea>`
-    document.getElementById('private-key').innerHTML= 
-  `<label for= "Private Key"> Private Key </label>
-  <textarea class="form-control" id="private-key">${privateKeyDisplay}</textarea>`;  
+  const name = document.getElementById('client-name').value
+  const redirectUri = document.getElementById('redirect-url').value
+  fetch(server + '/oauth/newclient', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name,
+      redirectUri,
+      publicKey
+    })
+  }).then(async (res) => {
+    const body = await res.json()
+    if (!res.ok) {
+      document.getElementById('error').innerText = body.message;
+    } else {
+      const { id, secret } = body
+      document.getElementById('client-id').innerText = id;
+      document.getElementById('client-secret').innerText = secret;
+      result.hidden = false;
+    }
+  })
 }
-
 
 },{"node-rsa":118}],2:[function(require,module,exports){
 var asn1 = exports;
@@ -16548,30 +16569,35 @@ utils.intFromLE = intFromLE;
 
 },{"bn.js":27,"minimalistic-assert":116,"minimalistic-crypto-utils":117}],93:[function(require,module,exports){
 module.exports={
-  "_from": "elliptic@^6.0.0",
+  "_args": [
+    [
+      "elliptic@6.4.1",
+      "/Users/ian/Documents/digic4developers"
+    ]
+  ],
+  "_from": "elliptic@6.4.1",
   "_id": "elliptic@6.4.1",
   "_inBundle": false,
   "_integrity": "sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==",
   "_location": "/elliptic",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "elliptic@^6.0.0",
+    "raw": "elliptic@6.4.1",
     "name": "elliptic",
     "escapedName": "elliptic",
-    "rawSpec": "^6.0.0",
+    "rawSpec": "6.4.1",
     "saveSpec": null,
-    "fetchSpec": "^6.0.0"
+    "fetchSpec": "6.4.1"
   },
   "_requiredBy": [
     "/browserify-sign",
     "/create-ecdh"
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
-  "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
-  "_spec": "elliptic@^6.0.0",
-  "_where": "/Users/talithachin/Desktop/Digic/node_modules/browserify-sign",
+  "_spec": "6.4.1",
+  "_where": "/Users/ian/Documents/digic4developers",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -16579,7 +16605,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/indutny/elliptic/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "bn.js": "^4.4.0",
     "brorand": "^1.0.1",
@@ -16589,7 +16614,6 @@ module.exports={
     "minimalistic-assert": "^1.0.0",
     "minimalistic-crypto-utils": "^1.0.0"
   },
-  "deprecated": false,
   "description": "EC cryptography",
   "devDependencies": {
     "brfs": "^1.4.3",
