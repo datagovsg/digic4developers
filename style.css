@@ -1,5 +1,11 @@
-body{
-    margin-top:30px;
-    color: "
-    #213d7b"
-  }
+body {
+  margin-top: 30px;
+  color: #213d7b;
+  word-break: break-all;
+}
+
+.code {
+  font-family: monospace;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+}

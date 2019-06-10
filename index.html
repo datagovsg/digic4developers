@@ -8,11 +8,12 @@
   <title>Client Registration</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
   <h1>Register Your Business to Access Digic </h1>
-  <form id="form">
+  <form id="step1">
     <div class="input-field col s12">
       <input type="text" class="form-control" id="client-name" placeholder="ABC Pte Ltd">
       <label for="client-name">Business Name</label>
@@ -32,7 +33,7 @@
 
   <p id="error-msg"></p>
 
-  <div id="result" hidden>
+  <div id="step2">
     <div class="row">
       <h5>Client ID</h5>
       <p id="client-id"></p>
@@ -48,6 +49,83 @@
     <div class="row">
       <h5>Private Key</h5>
       <p id="private-key"></p>
+    </div>
+
+    <p id="auth-url" class="code">
+    </p>
+    <a class="btn waves-effect waves-light blue darken-1" id="login-btn">Login with Digic
+      <i class="material-icons right">fingerprint</i>
+    </a>
+  </div>
+
+  <div id="step3">
+    <div class="row">
+      <h5>Authorization Code</h5>
+      <p id="auth-code"></p>
+    </div>
+
+    <p id="exchange-url" class="code">
+    </p>
+
+     <button class="btn waves-effect waves-light" id="exchange-btn" name="action">Exchange Authorization Code for Access Token
+      <i class="material-icons right">compare_arrows</i>
+    </button>
+  </div>
+
+  <div id="step4">
+    <div class="row">
+      <h5>Response</h5>
+      <p id="access-token"></p>
+    </div>
+    <div class="input-field col s12">
+      <input type="text" class="form-control" id="client-secret-2">
+      <label for="client-secret-2" class="active">Client Secret</label>
+    </div>
+    <button class="btn waves-effect waves-light" id="decode-id" name="action">Verify and Decode id_token jwt
+      <i class="material-icons right">check</i>
+    </button>
+  </div>
+
+  <div id="step5">
+    <div class="row">
+      <h5>Successfully Decoded</h5>
+      <p id="decoded-id"></p>
+    </div>
+    <p id="userinfo-url" class="code">
+    </p>
+    <button class="btn waves-effect waves-light" id="userinfo-btn" name="action">Get UserInfo JWE
+      <i class="material-icons right">face</i>
+    </button>
+  </div>
+
+  <div id="step6">
+    <div class="row">
+      <h5>UserInfo in JWE</h5>
+      <p id="jwe"></p>
+    </div>
+    <div class="row">
+      <h5>Private Key</h5>
+      <p id="private-key-2"></p>
+    </div>
+    <button class="btn waves-effect waves-light" id="decrypt-btn" name="action">Decrypt
+      <i class="material-icons right">lock_open</i>
+    </button>
+  </div>
+
+  <div id="step7">
+    <div class="row">
+      <h5>UserInfo in JWS</h5>
+      <p id="jws"></p>
+    </div>
+    <button class="btn waves-effect waves-light" id="decode-btn" name="action">Verify and Decode
+      <i class="material-icons right">lock_open</i>
+    </button>
+  </div>
+
+  <div id="step8">
+    <div class="row">
+      <h5>UserInfo Verified Successfully</h5>
+      <p id="user-info"></p>
     </div>
   </div>
 
