@@ -2,8 +2,7 @@ const NodeRSA = require('node-rsa')
 const querystring = require('querystring');
 const jwt = require('jsonwebtoken')
 const jose = require('node-jose')
-window.jose = jose
-const server = "http://localhost:3000"
+const server = "https://staging.digital-ic.sg"
 
 window.getEl = document.getElementById.bind(document)
 
@@ -13,6 +12,15 @@ function generateRSAKeyPairs() {
   const privateKey = key.exportKey('pkcs8-private-pem')
   return { publicKey, privateKey }
 }
+
+function scrollToView(el) {
+  el.hidden = false;
+  setTimeout(() => {
+    el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+  }, 200);
+}
+
+window.scrollToView = scrollToView
 
 // STEP 1: Client Registration Form
 const step1 = getEl('step1')
@@ -39,7 +47,7 @@ function getCredentials(e) {
     },
     body: JSON.stringify({
       name: name.value,
-      redirectUri: redirectUri.value,
+      redirectUri: redirectUriEl.value,
       publicKey
     })
   }).then(async (res) => {
@@ -62,7 +70,7 @@ function getCredentials(e) {
       fillDetails(thingsToStore)
       // Create Authorization Request URL
       createRequestUrlButton(thingsToStore)
-      step2.hidden = false;
+      scrollToView(step2);
     }
   })
 }
@@ -75,7 +83,6 @@ function fillDetails({ id, secret, publicKey, privateKey }) {
   clientSecretEl.innerText = secret;
   publicKeyEl.innerText = publicKey;
   privateKeyEl.innerText = privateKey;
-
 }
 
 function createRequestUrlButton(thingsToStore) {
@@ -109,10 +116,12 @@ function checkUrlQuery() {
   createRequestUrlButton(state)
   step2.hidden = false;
 
+
   const authCode = params.get('code')
   authCodeEl.innerText = authCode
 
-  step3.hidden = false
+  scrollToView(step3);
+
 
   const exchangeUrl = `${server}/oauth/token`
   const exchangeBody = querystring.stringify({
@@ -122,7 +131,7 @@ function checkUrlQuery() {
     client_secret: secret,
     redirect_uri: redirectUri
   })
-  const exchangeCode = `
+  const exchangeCode = `\
   POST ${exchangeUrl}
   Content-Type: application/x-www-form-urlencoded
 
@@ -169,7 +178,7 @@ function handleAccessToken(accessTokenJson) {
     onDecodedIdtoken(access_token, decodedId)
   }
 
-  step4.hidden = false
+  scrollToView(step4);
 }
 
 const step5 = getEl('step5')
@@ -177,10 +186,9 @@ const decodedIdEl = getEl('decoded-id')
 const userinfoUrlEl = getEl('userinfo-url')
 const userInfoBtn = getEl('userinfo-btn')
 function onDecodedIdtoken(accessToken, decodedId) {
-  step5.hidden = false
   decodedIdEl.innerText = JSON.stringify(decodedId, null, 2);
   const url = `${server}/oauth/userinfo/${decodedId.sub}`
-  userinfoUrlEl.innerText = `
+  userinfoUrlEl.innerText = `\
     Headers:
       Authorization: Bearer ${accessToken}
 
@@ -188,6 +196,7 @@ function onDecodedIdtoken(accessToken, decodedId) {
     GET ${server}/oauth/userinfo/${decodedId.sub}
   `
   userInfoBtn.onclick = getUserInfo.bind(this, accessToken, url)
+  scrollToView(step5);
 }
 
 const step6 = getEl('step6')
@@ -205,8 +214,7 @@ function getUserInfo(token, url) {
 const jweEl = getEl('jwe')
 const privateKeyEl2 = getEl('private-key-2')
 const decryptBtnEl = getEl('decrypt-btn')
-function handleJwe(jwe) {
-  step6.hidden = false
+function handleJwe(jwe) {  
   jweEl.innerText = jwe
   privateKeyEl2.innerText = privateKeyEl.innerText
   decryptBtnEl.onclick = async () => {
@@ -214,6 +222,7 @@ function handleJwe(jwe) {
     const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
     handleUserInfoJws(decrypted.payload.toString())
   }
+  scrollToBottom(step6);
 }
 
 const step7 = getEl('step7')
@@ -222,13 +231,11 @@ const userInfoEl = getEl('user-info')
 const jwsEl = getEl('jws')
 const decodeBtn2 = getEl('decode-btn')
 function handleUserInfoJws(jws) {
-  step7.hidden = false
+  scrollToView(step7);
   jwsEl.innerText = jws
   decodeBtn2.onclick = () => {
     const userInfo = jwt.verify(jws, clientSecretEl2.value)
     userInfoEl.innerText = JSON.stringify(userInfo, null, 2)
-    step8.hidden = false
+    scrollToView(step8);
   }
 }
-
-

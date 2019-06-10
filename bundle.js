@@ -3,8 +3,7 @@ const NodeRSA = require('node-rsa')
 const querystring = require('querystring');
 const jwt = require('jsonwebtoken')
 const jose = require('node-jose')
-window.jose = jose
-const server = "http://localhost:3000"
+const server = "https://staging.digital-ic.sg"
 
 window.getEl = document.getElementById.bind(document)
 
@@ -14,6 +13,15 @@ function generateRSAKeyPairs() {
   const privateKey = key.exportKey('pkcs8-private-pem')
   return { publicKey, privateKey }
 }
+
+function scrollToView(el) {
+  el.hidden = false;
+  setTimeout(() => {
+    el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+  }, 200);
+}
+
+window.scrollToView = scrollToView
 
 // STEP 1: Client Registration Form
 const step1 = getEl('step1')
@@ -40,7 +48,7 @@ function getCredentials(e) {
     },
     body: JSON.stringify({
       name: name.value,
-      redirectUri: redirectUri.value,
+      redirectUri: redirectUriEl.value,
       publicKey
     })
   }).then(async (res) => {
@@ -63,7 +71,7 @@ function getCredentials(e) {
       fillDetails(thingsToStore)
       // Create Authorization Request URL
       createRequestUrlButton(thingsToStore)
-      step2.hidden = false;
+      scrollToView(step2);
     }
   })
 }
@@ -76,7 +84,6 @@ function fillDetails({ id, secret, publicKey, privateKey }) {
   clientSecretEl.innerText = secret;
   publicKeyEl.innerText = publicKey;
   privateKeyEl.innerText = privateKey;
-
 }
 
 function createRequestUrlButton(thingsToStore) {
@@ -110,10 +117,12 @@ function checkUrlQuery() {
   createRequestUrlButton(state)
   step2.hidden = false;
 
+
   const authCode = params.get('code')
   authCodeEl.innerText = authCode
 
-  step3.hidden = false
+  scrollToView(step3);
+
 
   const exchangeUrl = `${server}/oauth/token`
   const exchangeBody = querystring.stringify({
@@ -123,7 +132,7 @@ function checkUrlQuery() {
     client_secret: secret,
     redirect_uri: redirectUri
   })
-  const exchangeCode = `
+  const exchangeCode = `\
   POST ${exchangeUrl}
   Content-Type: application/x-www-form-urlencoded
 
@@ -170,7 +179,7 @@ function handleAccessToken(accessTokenJson) {
     onDecodedIdtoken(access_token, decodedId)
   }
 
-  step4.hidden = false
+  scrollToView(step4);
 }
 
 const step5 = getEl('step5')
@@ -178,10 +187,9 @@ const decodedIdEl = getEl('decoded-id')
 const userinfoUrlEl = getEl('userinfo-url')
 const userInfoBtn = getEl('userinfo-btn')
 function onDecodedIdtoken(accessToken, decodedId) {
-  step5.hidden = false
   decodedIdEl.innerText = JSON.stringify(decodedId, null, 2);
   const url = `${server}/oauth/userinfo/${decodedId.sub}`
-  userinfoUrlEl.innerText = `
+  userinfoUrlEl.innerText = `\
     Headers:
       Authorization: Bearer ${accessToken}
 
@@ -189,6 +197,7 @@ function onDecodedIdtoken(accessToken, decodedId) {
     GET ${server}/oauth/userinfo/${decodedId.sub}
   `
   userInfoBtn.onclick = getUserInfo.bind(this, accessToken, url)
+  scrollToView(step5);
 }
 
 const step6 = getEl('step6')
@@ -206,8 +215,7 @@ function getUserInfo(token, url) {
 const jweEl = getEl('jwe')
 const privateKeyEl2 = getEl('private-key-2')
 const decryptBtnEl = getEl('decrypt-btn')
-function handleJwe(jwe) {
-  step6.hidden = false
+function handleJwe(jwe) {  
   jweEl.innerText = jwe
   privateKeyEl2.innerText = privateKeyEl.innerText
   decryptBtnEl.onclick = async () => {
@@ -215,6 +223,7 @@ function handleJwe(jwe) {
     const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
     handleUserInfoJws(decrypted.payload.toString())
   }
+  scrollToBottom(step6);
 }
 
 const step7 = getEl('step7')
@@ -223,17 +232,14 @@ const userInfoEl = getEl('user-info')
 const jwsEl = getEl('jws')
 const decodeBtn2 = getEl('decode-btn')
 function handleUserInfoJws(jws) {
-  step7.hidden = false
+  scrollToView(step7);
   jwsEl.innerText = jws
   decodeBtn2.onclick = () => {
     const userInfo = jwt.verify(jws, clientSecretEl2.value)
     userInfoEl.innerText = JSON.stringify(userInfo, null, 2)
-    step8.hidden = false
+    scrollToView(step8);
   }
 }
-
-
-
 },{"jsonwebtoken":124,"node-jose":211,"node-rsa":239,"querystring":287}],2:[function(require,module,exports){
 var asn1 = exports;
 
@@ -18106,35 +18112,30 @@ utils.intFromLE = intFromLE;
 
 },{"bn.js":30,"minimalistic-assert":150,"minimalistic-crypto-utils":151}],101:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "elliptic@6.4.1",
-      "/Users/ian/Documents/digic4developers"
-    ]
-  ],
-  "_from": "elliptic@6.4.1",
+  "_from": "elliptic@^6.0.0",
   "_id": "elliptic@6.4.1",
   "_inBundle": false,
   "_integrity": "sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==",
   "_location": "/elliptic",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "elliptic@6.4.1",
+    "raw": "elliptic@^6.0.0",
     "name": "elliptic",
     "escapedName": "elliptic",
-    "rawSpec": "6.4.1",
+    "rawSpec": "^6.0.0",
     "saveSpec": null,
-    "fetchSpec": "6.4.1"
+    "fetchSpec": "^6.0.0"
   },
   "_requiredBy": [
     "/browserify-sign",
     "/create-ecdh"
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
-  "_spec": "6.4.1",
-  "_where": "/Users/ian/Documents/digic4developers",
+  "_shasum": "c2d0b7776911b86722c632c3c06c60f2f819939a",
+  "_spec": "elliptic@^6.0.0",
+  "_where": "/Users/ian/Documents/digic4developers/node_modules/browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -18142,6 +18143,7 @@ module.exports={
   "bugs": {
     "url": "https://github.com/indutny/elliptic/issues"
   },
+  "bundleDependencies": false,
   "dependencies": {
     "bn.js": "^4.4.0",
     "brorand": "^1.0.1",
@@ -18151,6 +18153,7 @@ module.exports={
     "minimalistic-assert": "^1.0.0",
     "minimalistic-crypto-utils": "^1.0.0"
   },
+  "deprecated": false,
   "description": "EC cryptography",
   "devDependencies": {
     "brfs": "^1.4.3",

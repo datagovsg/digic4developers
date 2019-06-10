@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run watchify",
-    "watchify": "watchify app.js -o bundle.js",
+    "build": "browserify app.js -o bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +15,6 @@
     "node-rsa": "^1.0.5"
   },
   "devDependencies": {
-    "watchify": "^3.11.1"
+    "browserify": "^16.2.3"
   }
 }

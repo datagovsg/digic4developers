@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Client Registration</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="./style.css">
@@ -13,7 +14,7 @@
 
 <body>
   <h1>Register Your Business to Access Digic </h1>
-  <form id="step1">
+  <form id="step1" class="card">
     <div class="input-field col s12">
       <input type="text" class="form-control" id="client-name" placeholder="ABC Pte Ltd">
       <label for="client-name">Business Name</label>
@@ -33,7 +34,7 @@
 
   <p id="error-msg"></p>
 
-  <div id="step2">
+  <div id="step2" class="card" hidden>
     <div class="row">
       <h5>Client ID</h5>
       <p id="client-id"></p>
@@ -58,7 +59,7 @@
     </a>
   </div>
 
-  <div id="step3">
+  <div id="step3" class="card" hidden>
     <div class="row">
       <h5>Authorization Code</h5>
       <p id="auth-code"></p>
@@ -72,7 +73,7 @@
     </button>
   </div>
 
-  <div id="step4">
+  <div id="step4" class="card" hidden>
     <div class="row">
       <h5>Response</h5>
       <p id="access-token"></p>
@@ -82,11 +83,11 @@
       <label for="client-secret-2" class="active">Client Secret</label>
     </div>
     <button class="btn waves-effect waves-light" id="decode-id" name="action">Verify and Decode id_token jwt
-      <i class="material-icons right">check</i>
+      <i class="material-icons right">verified_user</i>
     </button>
   </div>
 
-  <div id="step5">
+  <div id="step5" class="card" hidden>
     <div class="row">
       <h5>Successfully Decoded</h5>
       <p id="decoded-id"></p>
@@ -98,7 +99,7 @@
     </button>
   </div>
 
-  <div id="step6">
+  <div id="step6" class="card" hidden>
     <div class="row">
       <h5>UserInfo in JWE</h5>
       <p id="jwe"></p>
@@ -112,17 +113,17 @@
     </button>
   </div>
 
-  <div id="step7">
+  <div id="step7" class="card" hidden>
     <div class="row">
       <h5>UserInfo in JWS</h5>
       <p id="jws"></p>
     </div>
     <button class="btn waves-effect waves-light" id="decode-btn" name="action">Verify and Decode
-      <i class="material-icons right">lock_open</i>
+      <i class="material-icons right">verified_user</i>
     </button>
   </div>
 
-  <div id="step8">
+  <div id="step8" class="card" hidden>
     <div class="row">
       <h5>UserInfo Verified Successfully</h5>
       <p id="user-info"></p>

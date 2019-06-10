@@ -1,7 +1,18 @@
 body {
   margin-top: 30px;
-  color: #213d7b;
+  color: black;
   word-break: break-all;
+  padding: 5vh 10vw;
+  font-family: 'Noto Sans HK', sans-serif;
+}
+
+h1, h2, h3, h4, h5, p, .code, span, div {
+  font-family: 'Noto Sans HK', sans-serif;
+}
+
+.card {
+  padding: 5vh;
+  margin-top: 4vh;
 }
 
 .code {
