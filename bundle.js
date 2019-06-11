@@ -92,7 +92,7 @@ function createRequestUrlButton(thingsToStore) {
     + 'client_id=' + id
     + '&redirect_uri=' + redirectUri
     + '&response_type=code'
-    + '&scope=openid%20name%20sex%20nationality'
+    + '&scope=openid%20name%20sex%20race'
     + '&state='
   authUrl.innerHTML = url.replace(/[\?&]/g, (k) => `<br>${k}`) + 'SOME_RANDOM_STRING'
   loginBtn.href = url + btoa(JSON.stringify(thingsToStore))
