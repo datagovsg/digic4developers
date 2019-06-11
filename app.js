@@ -222,7 +222,7 @@ function handleJwe(jwe) {
     const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
     handleUserInfoJws(decrypted.payload.toString())
   }
-  scrollToBottom(step6);
+  scrollToView(step6);
 }
 
 const step7 = getEl('step7')
