@@ -46,7 +46,7 @@ function getCredentials(e) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name: name.value,
+      name: nameEl.value,
       redirectUri: redirectUriEl.value,
       publicKey
     })
