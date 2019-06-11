@@ -230,6 +230,7 @@ const step8 = getEl('step8')
 const userInfoEl = getEl('user-info')
 const jwsEl = getEl('jws')
 const decodeBtn2 = getEl('decode-btn')
+const startOver = getEl('start-over-btn')
 function handleUserInfoJws(jws) {
   scrollToView(step7);
   jwsEl.innerText = jws
@@ -237,5 +238,8 @@ function handleUserInfoJws(jws) {
     const userInfo = jwt.verify(jws, clientSecretEl2.value)
     userInfoEl.innerText = JSON.stringify(userInfo, null, 2)
     scrollToView(step8);
+    startOver.onclick = () => {
+      window.location.href = '.'
+    }
   }
 }
