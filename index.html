@@ -35,45 +35,61 @@
   <p id="error-msg"></p>
 
   <div id="step2" class="card" hidden>
+
+    <!-- BUTTON HTML CODE -->
+    <div class="flex-container">
+      <div class="half" style="margin-right: 40px">
+        <div class="row">
+          <h5>Button HTML Code</h5>
+        </div>
+        <div class="code">
+          <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#button-code">COPY
+            <i class="material-icons right">content_copy</i>
+          </button>
+          <pre id="button-code">
+          </pre>
+        </div>
+      </div>
+
+      <!-- SERVER SIDE CODE -->
+      <div class="half">
+        <div class="row">
+          <h5>Server Code</h5>
+        </div>
+        <div class="code">
+          <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#server-code">COPY
+            <i class="material-icons right">content_copy</i>
+          </button>
+          <pre id="server-code">
+          </pre>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <h5>Client ID</h5>
       <p id="client-id"></p>
     </div>
-    <div class="row">
+    <div class="row" style="position: relative">
       <h5>Client Secret</h5>
-      <p id="client-secret"></p>
+      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#client-secret">COPY
+        <i class="material-icons right">content_copy</i>
+      </button>
+      <p>••••••••••</p>
+      <p id="client-secret" class="dontshow"></p>
     </div>
+    <div class="row" style="position: relative">
+      <h5>Private Key</h5>
+      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#private-key">COPY
+        <i class="material-icons right">content_copy</i>
+      </button>
+      <p>••••••••••</p>
+      <p id="private-key" class="dontshow">wefwefwe</p>
+    </div>
+
     <div class="row">
       <h5>Public Key</h5>
       <p id="public-key"></p>
-    </div>
-    <div class="row">
-      <h5>Private Key</h5>
-      <p id="private-key"></p>
-    </div>
-
-    <!-- BUTTON HTML CODE -->
-    <div class="row">
-      <h5>Button HTML Code</h5>
-    </div>
-    <div class="code">
-      <button class="btn waves-effect waves-light copy-btn" id="copy-client-code" name="action" data-clipboard-target="#button-code">COPY
-          <i class="material-icons right">content_copy</i>
-      </button>
-      <pre id="button-code">
-      </pre>
-    </div>
-
-    <!-- SERVER SIDE CODE -->
-    <div class="row">
-      <h5>Server Code</h5>
-    </div>
-    <div class="code">
-        <button class="btn waves-effect waves-light copy-btn" id="copy-server-code" name="action" data-clipboard-target="#server-code">COPY
-            <i class="material-icons right">content_copy</i>
-        </button>
-      <pre id="server-code">
-      </pre>
     </div>
 
     <!-- BUTTON -->
