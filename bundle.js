@@ -3,8 +3,7 @@ const NodeRSA = require('node-rsa')
 const querystring = require('querystring');
 const jwt = require('jsonwebtoken')
 const jose = require('node-jose')
-const server = "https://staging.digital-ic.sg"
-
+const server = "https://api-staging.digital-ic.sg"
 window.getEl = document.getElementById.bind(document)
 
 function generateRSAKeyPairs() {
@@ -17,7 +16,7 @@ function generateRSAKeyPairs() {
 function scrollToView(el) {
   el.hidden = false;
   setTimeout(() => {
-    el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+    el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
   }, 200);
 }
 
@@ -35,7 +34,7 @@ const step2 = getEl('step2');
 const publicKeyEl = getEl('public-key');
 const privateKeyEl = getEl('private-key');
 const loginBtn = getEl('login-btn');
-const authUrl = getEl('auth-url');
+const buttonCode = getEl('button-code');
 
 function getCredentials(e) {
   e.preventDefault();
@@ -78,6 +77,7 @@ function getCredentials(e) {
 
 const clientIdEl = getEl('client-id')
 const clientSecretEl = getEl('client-secret')
+const serverCode = getEl('server-code')
 
 function fillDetails({ id, secret, publicKey, privateKey }) {
   clientIdEl.innerText = id;
@@ -87,15 +87,18 @@ function fillDetails({ id, secret, publicKey, privateKey }) {
 }
 
 function createRequestUrlButton(thingsToStore) {
-  const { id, redirectUri } = thingsToStore
+  new ClipboardJS('.btn')
+  const { id, secret, redirectUri } = thingsToStore
   const url = server + '/oauth/authorize?'
     + 'client_id=' + id
     + '&redirect_uri=' + redirectUri
     + '&response_type=code'
     + '&scope=openid%20name%20sex%20race'
     + '&state='
-  authUrl.innerHTML = url.replace(/[\?&]/g, (k) => `<br>${k}`) + 'SOME_RANDOM_STRING'
+  buttonCode.innerText = generateClientSnippet(url.replace(/[\?&]/g, (k) => `\n\t${k}`) + 'SOME_RANDOM_STRING')
   loginBtn.href = url + btoa(JSON.stringify(thingsToStore))
+  serverCode.innerText = generateExpressSnippet(id, secret, redirectUri)
+
 }
 
 //  Step 3: Generate Login Button
@@ -215,7 +218,7 @@ function getUserInfo(token, url) {
 const jweEl = getEl('jwe')
 const privateKeyEl2 = getEl('private-key-2')
 const decryptBtnEl = getEl('decrypt-btn')
-function handleJwe(jwe) {  
+function handleJwe(jwe) {
   jweEl.innerText = jwe
   privateKeyEl2.innerText = privateKeyEl.innerText
   decryptBtnEl.onclick = async () => {
@@ -243,6 +246,45 @@ function handleUserInfoJws(jws) {
       window.location.href = '.'
     }
   }
+}
+
+function generateClientSnippet(url) {
+  return `
+  <button class="digic-login-btn">
+    <a href="${url}"> Sign in with Digital-ID</a>
+  </button>
+
+  `
+}
+
+function generateExpressSnippet(clientId, clientSecret, redirectUri) {
+  return `
+      const accessTokenJson = await got.post('${server}/oauth/token', {
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body:
+              querystring.stringify({
+                  grant_type: 'authorization_code',
+                  code: <AUTH_CODE>,
+                  client_id: ${clientId},
+                  client_secret: ${clientSecret},
+                  redirect_uri: ${redirectUri}
+              })
+
+      }).json()
+
+      const { access_token, id_token } = accessTokenJson
+      const { sub } = jwt.verify(id_token, clientSecret)
+      const jwe = await got('${server}/oauth/userinfo/' + sub, {
+          headers: {
+              Authorization: 'Bearer ' + access_token
+          }
+      })
+      const privateKey = await jose.JWK.asKey(<PRIVATE_KEY>, 'pem')
+      const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
+      const userInfo = jwt.verify(decrypted.payload.toString(), clientSecret)
+  `
 }
 },{"jsonwebtoken":124,"node-jose":211,"node-rsa":239,"querystring":287}],2:[function(require,module,exports){
 var asn1 = exports;
