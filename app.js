@@ -82,7 +82,7 @@ function fillDetails({ id, secret, publicKey, privateKey }) {
   clientIdEl.innerText = id;
   clientSecretEl.innerText = secret;
   publicKeyEl.innerText = publicKey;
-  privateKeyEl.innerText = privateKey;
+  privateKeyEl.innerText = privateKey.replace(/\n/g, '');
 }
 
 function createRequestUrlButton(thingsToStore) {
@@ -274,7 +274,7 @@ function generateExpressSnippet(clientId, redirectUri) {
       })
 
       const { access_token, id_token } = JSON.parse(accessTokenJson.body)
-      const { sub } = jwt.verify(id_token, clientSecret)
+      const { sub } = jwt.verify(id_token, CLIENT_SECRET)
       const jwe = await got('${server}/oauth/userinfo/' + sub, {
           headers: {
               Authorization: 'Bearer ' + access_token
@@ -282,6 +282,6 @@ function generateExpressSnippet(clientId, redirectUri) {
       })
       const privateKey = await jose.JWK.asKey(PRIVATE_KEY, 'pem')
       const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe.body)
-      const userInfo = jwt.verify(decrypted.payload.toString(), clientSecret)
+      const userInfo = jwt.verify(decrypted.payload.toString(), CLIENT_SECRET)
   `
 }

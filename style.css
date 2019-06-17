@@ -39,6 +39,8 @@ h1, h2, h3, h4, h5, p, .code, span, div {
 
 pre {
   white-space: pre-wrap !important;
+  height: 250px;
+  overflow: auto;
 }
 
 .dontshow {
