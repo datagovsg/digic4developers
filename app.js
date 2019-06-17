@@ -96,7 +96,7 @@ function createRequestUrlButton(thingsToStore) {
     + '&state='
   buttonCode.innerText = generateClientSnippet(url.replace(/[\?&]/g, (k) => `\n\t${k}`) + 'SOME_RANDOM_STRING')
   loginBtn.href = url + btoa(JSON.stringify(thingsToStore))
-  serverCode.innerText = generateExpressSnippet(id, secret, redirectUri)
+  serverCode.innerText = generateExpressSnippet(id, redirectUri)
 
 }
 
@@ -256,7 +256,7 @@ function generateClientSnippet(url) {
   `
 }
 
-function generateExpressSnippet(clientId, clientSecret, redirectUri) {
+function generateExpressSnippet(clientId, redirectUri) {
   return `
       const accessTokenJson = await got.post('${server}/oauth/token', {
           headers: {
@@ -265,10 +265,10 @@ function generateExpressSnippet(clientId, clientSecret, redirectUri) {
           body:
               querystring.stringify({
                   grant_type: 'authorization_code',
-                  code: <AUTH_CODE>,
-                  client_id: ${clientId},
-                  client_secret: ${clientSecret},
-                  redirect_uri: ${redirectUri}
+                  code: req.query.code,
+                  client_id: '${clientId}',
+                  client_secret: CLIENT_SECRET,
+                  redirect_uri: '${redirectUri}'
               })
 
       }).json()
@@ -280,7 +280,7 @@ function generateExpressSnippet(clientId, clientSecret, redirectUri) {
               Authorization: 'Bearer ' + access_token
           }
       })
-      const privateKey = await jose.JWK.asKey(<PRIVATE_KEY>, 'pem')
+      const privateKey = await jose.JWK.asKey(PRIVATE_KEY, 'pem')
       const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
       const userInfo = jwt.verify(decrypted.payload.toString(), clientSecret)
   `
