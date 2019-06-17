@@ -2,7 +2,7 @@ const NodeRSA = require('node-rsa')
 const querystring = require('querystring');
 const jwt = require('jsonwebtoken')
 const jose = require('node-jose')
-const server = "http://api-staging.digital-ic.sg"
+const server = "https://api-staging.digital-ic.sg"
 window.getEl = document.getElementById.bind(document)
 
 function generateRSAKeyPairs() {
