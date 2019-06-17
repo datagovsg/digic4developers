@@ -28,3 +28,23 @@ h1, h2, h3, h4, h5, p, .code, span, div {
   top: 10px;
   right: 10px;
 }
+
+.flex-container {
+  display: flex;
+}
+
+.half {
+  width: 50%;
+}
+
+pre {
+  white-space: pre-wrap !important;
+}
+
+.dontshow {
+  position: absolute;
+  display: block;
+  height: 1px;
+  overflow: hidden;
+  width: 1px;
+}

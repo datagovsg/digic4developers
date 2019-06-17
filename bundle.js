@@ -26,7 +26,7 @@ window.scrollToView = scrollToView
 const step1 = getEl('step1')
 const nameEl = getEl('client-name')
 const redirectUriEl = getEl('redirect-url')
-redirectUriEl.value = document.location.href
+// redirectUriEl.value = document.location.href
 step1.onsubmit = getCredentials;
 
 // STEP 2: Client ID, Secret, key pair
@@ -95,7 +95,7 @@ function createRequestUrlButton(thingsToStore) {
     + '&response_type=code'
     + '&scope=openid%20name%20sex%20race'
     + '&state='
-  buttonCode.innerText = generateClientSnippet(url.replace(/[\?&]/g, (k) => `\n\t${k}`) + 'SOME_RANDOM_STRING')
+  buttonCode.innerText = generateClientSnippet(url + 'SOME_RANDOM_STRING')
   loginBtn.href = url + btoa(JSON.stringify(thingsToStore))
   serverCode.innerText = generateExpressSnippet(id, redirectUri)
 
@@ -272,9 +272,9 @@ function generateExpressSnippet(clientId, redirectUri) {
                   redirect_uri: '${redirectUri}'
               })
 
-      }).json()
+      })
 
-      const { access_token, id_token } = accessTokenJson
+      const { access_token, id_token } = JSON.parse(accessTokenJson.body)
       const { sub } = jwt.verify(id_token, clientSecret)
       const jwe = await got('${server}/oauth/userinfo/' + sub, {
           headers: {
@@ -282,7 +282,7 @@ function generateExpressSnippet(clientId, redirectUri) {
           }
       })
       const privateKey = await jose.JWK.asKey(PRIVATE_KEY, 'pem')
-      const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
+      const decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe.body)
       const userInfo = jwt.verify(decrypted.payload.toString(), clientSecret)
   `
 }
