@@ -5,7 +5,11 @@ import {
   BrowserRouter as Router,
   Switch
 } from 'react-router-dom'
+import NavBar from './Components/NavBar'
 import Landing from './Pages/Landing'
+import SignIn from './Pages/SignIn'
+import MyApps from './Pages/MyApps'
+import CreateNewApp from './Pages/CreateNewApp'
 
 function PrivateRoute({ component: Component, ...rest }) {
   const isAuthenticated = false
@@ -25,9 +29,15 @@ function PrivateRoute({ component: Component, ...rest }) {
 function App () {
   return (
     <Router>
-      <Switch>
-        <Route path='/' exact component={ Landing }/>
-      </Switch>
+      <div>
+        <NavBar/>
+        <Switch>
+          <Route path='/' exact component={ Landing }/>
+          <Route path='/sign-in' exact component={ SignIn }/>
+          <Route path='/my-apps' exact component={ MyApps }/>
+          <Route path='/create-new-app' exact component={ CreateNewApp }/>
+        </Switch>
+      </div>
     </Router>
   )
 }
