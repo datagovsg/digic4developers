@@ -29,7 +29,10 @@ export default function NavBar () {
           for developers
         </Typography>
         <nav>
-          <Link variant="button" color="textPrimary" href="#" style={ styles.link }>
+          <Link variant="button" color="textPrimary" href="my-apps" style={ styles.link }>
+            MY APPS
+          </Link>
+          <Link variant="button" color="textPrimary" href="guidelines" style={ styles.link }>
             GUIDELINES
           </Link>
           <Link variant="button" color="textPrimary" href="sign-in" style={ styles.link }>
