@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scope Selection</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <form action="#" id="checkboxes">
+    </form>
+    <script>
+        (async function () {
+            let res = await fetch('./scope.txt')
+            const scope = await res.text()
+            let scopes = scope.split('\n')
+            scopes = scopes
+                .filter((l) => {
+                    return !l.startsWith('//')
+                }).map((l) => {
+                    const parts = l.split(' - ')
+                    const key = parts.shift()
+                    return [key, parts.join(' - ')]
+                })
+            console.log(scopes)
+
+            // Render checkboxes
+            let checkboxesDiv = document.querySelector('#checkboxes')
+            let checkboxesHTML = '<h5 id="scopes"></h5>'
+            scopes.forEach((scope) => {
+                if (scope.length !== 2) {
+                    return
+                }
+                checkboxesHTML += `
+            <p class="checkbox-p">
+                <label>
+                    <input type="checkbox" name="${scope[0]}"/>
+                    <span>${scope[1]}</span>
+                </label>
+            </p>`
+            })
+            checkboxesDiv.innerHTML = checkboxesHTML
+            let scopesEl = document.querySelector('#scopes')
+            checkboxesDiv.addEventListener('input', function(data) {
+                let formData = new FormData(checkboxesDiv);
+                let scopesText = Array.from(formData.keys()).join(',')
+                scopesEl.innerText = scopesText
+            })
+        })()
+    </script>
+</body>
+
+</html>

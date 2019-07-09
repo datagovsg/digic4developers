@@ -1,0 +1,141 @@
+// Source: https://www.ndi-api.gov.sg/assets/lib/trusted-data/myinfo/specs/myinfo-kyc-v3.0.2.html#section/Authentication/OAuth2
+// Just copy the table text and paste here
+uinfin - NRIC/FIN
+name - Principal Name
+aliasname - Alias Name
+hanyupinyinname - Hanyu Pinyin Name
+hanyupinyinaliasname - Hanyu Pinyin Alias Name
+marriedname - Married Name
+sex - Sex
+race - Race
+secondaryrace - Secondary Race
+dialect - Dialect
+dob - Date of Birth
+residentialstatus - Residential Status
+nationality - Nationality
+birthcountry - Country of Birth
+passportnumber - Passport Number
+passportexpirydate - Passport Expiry Date
+passtype - Pass Type
+passstatus - Pass Status
+passexpirydate - Pass Expiry Date
+employmentsector - Employment Sector
+mobileno - Mobile Number
+homeno - Home Contact Number
+email - Email Address
+regadd - Registered Address
+hdbtype - Type of HDB
+housingtype - Type of Housing
+mailadd - Mailing Address
+billadd - Billing Address
+cpfbalances - CPF Account Balance
+cpfcontributions - CPF Contribution History (up to 15 months)
+noa-basic - Notice of Assessment (Basic, Latest Year)
+noahistory-basic - Notice of Assessment (Basic, Last 2 Years)
+noa - Notice of Assessment (Detailed, Latest Year)
+noahistory - Notice of Assessment (Detailed, Last 2 Years)
+ownerprivate - Ownership of Private Residential Property
+householdincome - Monthly Household Income
+employment - Name of Employer
+occupation - Occupation
+edulevel - Highest Education Level
+schoolname - Name of School Attended
+gradyear - Year of Graduation
+marital - Marital Status
+marriagedate - Marriage Date
+marriagecertno - Marriage Certificate Number
+countryofmarriage - Country of Marriage
+divorcedate - Divorce Date
+childrenbirthrecords.birthcertno - Children Birth Records - Birth Cert Number
+childrenbirthrecords.name - Children Birth Records - Name
+childrenbirthrecords.aliasname - Children Birth Records - Alias Name
+childrenbirthrecords.hanyupinyinname - Children Birth Records - Hanyu Pinyin Name
+childrenbirthrecords.hanyupinyinaliasname - Children Birth Records - Hanyu Pinyin Alias Name
+childrenbirthrecords.marriedname - Children Birth Records - Married Name
+childrenbirthrecords.sex - Children Birth Records - Sex
+childrenbirthrecords.race - Children Birth Records - Race
+childrenbirthrecords.secondaryrace - Children Birth Records - Secondary Race
+childrenbirthrecords.dob - Children Birth Records - Date of Birth
+childrenbirthrecords.tob - Children Birth Records - Time of Birth
+childrenbirthrecords.dialect - Children Birth Records - Dialect
+childrenbirthrecords.lifestatus - Children Birth Records - Life Status
+sponsoredchildrenrecords.nric - Sponsored Children Records - NRIC
+sponsoredchildrenrecords.name - Sponsored Children Records - Name
+sponsoredchildrenrecords.aliasname - Sponsored Children Records - Alias Name
+sponsoredchildrenrecords.hanyupinyinname - Sponsored Children Records - Hanyu Pinyin Name
+sponsoredchildrenrecords.hanyupinyinaliasname - Sponsored Children Records - Hanyu Pinyin Alias Name
+sponsoredchildrenrecords.marriedname - Sponsored Children Records - Married Name
+sponsoredchildrenrecords.sex - Sponsored Children Records - Sex
+sponsoredchildrenrecords.race - Sponsored Children Records - Race
+sponsoredchildrenrecords.secondaryrace - Sponsored Children Records - Secondary Race
+sponsoredchildrenrecords.dialect - Sponsored Children Records - Dialect
+sponsoredchildrenrecords.dob - Sponsored Children Records - Date of Birth
+sponsoredchildrenrecords.birthcountry - Sponsored Children Records - Country of Birth
+sponsoredchildrenrecords.lifestatus - Sponsored Children Records - Life Status
+sponsoredchildrenrecords.residentialstatus - Sponsored Children Records - Residential Status
+sponsoredchildrenrecords.nationality - Sponsored Children Records - Nationality
+sponsoredchildrenrecords.scprgrantdate - Sponsored Children Records - SC PR Grant Date
+vehicles.vehicleno - Vehicles - Vehicle Number
+vehicles.type - Vehicles - Vehicle Type
+vehicles.iulabelno - Vehicles - IU Label Number
+vehicles.make - Vehicles - Vehicle Make
+vehicles.model - Vehicles - Vehicle Model
+vehicles.chassisno - Vehicles - Chassis Number
+vehicles.engineno - Vehicles - Engine Number
+vehicles.motorno - Vehicles - Motor Number
+vehicles.yearofmanufacture - Vehicles - Year of Manufacture
+vehicles.firstregistrationdate - Vehicles - First Registration Date
+vehicles.originalregistrationdate - Vehicles - Original Registration Date
+vehicles.coecategory - Vehicles - COE Category
+vehicles.coeexpirydate - Vehicles - COE Expiry Date
+vehicles.roadtaxexpirydate - Vehicles - Road Tax Expiry Date
+vehicles.quotapremium - Vehicles - Quota Premium
+vehicles.openmarketvalue - Vehicles - Open Market Value
+vehicles.co2emission - Vehicles - CO2 Emission Rate
+vehicles.status - Vehicles - Vehicle Status
+vehicles.primarycolour - Vehicles - Primary Colour
+vehicles.secondarycolour - Vehicles - Secondary Colour
+vehicles.attachment1 - Vehicles - Attachment 1
+vehicles.attachment2 - Vehicles - Attachment 2
+vehicles.attachment3 - Vehicles - Attachment 3
+vehicles.scheme - Vehicles - Vehicle Scheme
+vehicles.thcemission - Vehicles - THC Emission Rate
+vehicles.coemission - Vehicles - CO Emission Rate
+vehicles.noxemission - Vehicles - NOx Emission Rate
+vehicles.pmemission - Vehicles - PM Emission Rate
+vehicles.enginecapacity - Vehicles - Engine Capacity
+vehicles.powerrate - Vehicles - Power Rate
+vehicles.effectiveownership - Vehicles - Effective Date/Time of Ownership
+vehicles.propellant - Vehicles - Propellant
+vehicles.maximumunladenweight - Vehicles - Max Unladen Weight
+vehicles.maximumladenweight - Vehicles - Max Laden Weight
+vehicles.minimumparfbenefit - Vehicles - Minimum PARF Benefit
+vehicles.nooftransfers - Vehicles - No. of Transfers
+vehicles.vpc - Vehicles - Vehicle Parking Certificate
+drivinglicence.comstatus - Driving Licence - Certificate of Merit Status
+drivinglicence.totaldemeritpoints - Driving Licence - Total Demerit Points
+drivinglicence.suspension.startdate - Driving Licence - Suspension Start Date
+drivinglicence.suspension.enddate - Driving Licence - Suspension End Date
+drivinglicence.disqualification.startdate - Driving Licence - Disqualification Start Date
+drivinglicence.disqualification.enddate - Driving Licence - Disqualification End Date
+drivinglicence.revocation.startdate - Driving Licence - Revocation Start Date
+drivinglicence.revocation.enddate - Driving Licence - Revocation End Date
+drivinglicence.pdl.validity - Driving Licence - Provisional Driving Licence Validity
+drivinglicence.pdl.expirydate - Driving Licence - Provisional Driving Licence Expiry Date
+drivinglicence.pdl.classes - Driving Licence - Provisional Driving Licence Class
+drivinglicence.qdl.validity - Driving Licence - Qualified Driving Licence Validity
+drivinglicence.qdl.expirydate - Driving Licence - Qualified Driving Licence Expiry Date
+drivinglicence.qdl.classes - Driving Licence - Qualified Driving Licence Class
+drivinglicence.photocardserialno - Driving Licence - Photo Card Serial Number
+hdbownership.noofowners - HDB Ownership - Number of Owners
+hdbownership.address - HDB Ownership - Address
+hdbownership.hdbtype - HDB Ownership - Type of HDB Dwelling
+hdbownership.leasecommencementdate - HDB Ownership - Lease Commencement Date
+hdbownership.termoflease - HDB Ownership - Term of Lease
+hdbownership.dateofpurchase - HDB Ownership - Date of Purchase
+hdbownership.dateofownershiptransfer - HDB Ownership - Date of Transfer of Ownership
+hdbownership.loangranted - HDB Ownership - Loan Granted
+hdbownership.originalloanrepayment - HDB Ownership - Original Loan Repayment Period
+hdbownership.balanceloanrepayment - HDB Ownership - Balance Loan Repayment Period
+hdbownership.outstandingloanbalance - HDB Ownership - Outstanding HDB Loan Balance
+hdbownership.monthlyloaninstalment - HDB Ownership - Monthly Loan Instalment

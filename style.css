@@ -3,11 +3,19 @@ body {
   color: black;
   word-break: break-all;
   padding: 5vh 10vw;
-  font-family: 'Noto Sans HK', sans-serif;
+  font-family: "Noto Sans HK", sans-serif;
 }
 
-h1, h2, h3, h4, h5, p, .code, span, div {
-  font-family: 'Noto Sans HK', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+.code,
+span,
+div {
+  font-family: "Noto Sans HK", sans-serif;
 }
 
 .card {
@@ -49,4 +57,16 @@ pre {
   height: 1px;
   overflow: hidden;
   width: 1px;
+}
+
+.checkbox-p {
+  display: inline-flex;
+  min-width: 200px;
+  width: 24vw;
+  padding: 0 5vw;
+}
+
+.checkbox-p span {
+  color: black;
+  word-break: break-word;
 }
