@@ -14,6 +14,13 @@
 
 <body>
   <h1>Register Your Business to Access Digic </h1>
+  <div class="input-field col s12">
+    <select id="env-select">
+      <option value="https://test.digital-ic.sg">Test</option>
+      <option value="https://staging.digital-ic.sg" selected>Staging</option>
+    </select>
+    <label>Environment</label>
+  </div>
   <form id="step1" class="card">
     <div class="input-field col s12">
       <input type="text" class="form-control" id="client-name" placeholder="ABC Pte Ltd">
@@ -24,8 +31,8 @@
       <label for="redirect-url">Redirect URL</label>
     </div>
     <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
-    <br/>
-    <br/>
+    <br />
+    <br />
     <button class="btn waves-effect waves-light" id="submit" name="action">Submit
       <i class="material-icons right">send</i>
     </button>

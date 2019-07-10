@@ -18,6 +18,10 @@ div {
   font-family: "Noto Sans HK", sans-serif;
 }
 
+.input-field.col label {
+  left: 0;
+}
+
 .card {
   padding: 5vh;
   margin-top: 4vh;

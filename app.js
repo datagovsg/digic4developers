@@ -2,12 +2,23 @@ const NodeRSA = require('node-rsa')
 const querystring = require('querystring');
 const jwt = require('jsonwebtoken')
 const jose = require('node-jose')
-const server = "https://api-staging.digital-ic.sg"
+let server = "https://staging.digital-ic.sg"
 window.getEl = document.getElementById.bind(document)
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select')
+  M.FormSelect.init(elems, {})
+})
+
+const envSelect = getEl('env-select')
+envSelect.onchange = function() {
+  console.log(envSelect.value)
+  server = envSelect.value
+}
 
 function generateRSAKeyPairs() {
   const key = new NodeRSA({ b: 1024 });
-  const publicKey = key.exportKey('pkcs8-public-pem');
+  const publicKey = key.exportKey('pkcs8-public-pem')
   const privateKey = key.exportKey('pkcs8-private-pem')
   return { publicKey, privateKey }
 }
@@ -62,7 +73,8 @@ function getCredentials(e) {
         id,
         secret,
         publicKey,
-        privateKey
+        privateKey,
+        storedServer: server
       }
 
       console.log(thingsToStore)
@@ -78,11 +90,13 @@ const clientIdEl = getEl('client-id')
 const clientSecretEl = getEl('client-secret')
 const serverCode = getEl('server-code')
 
-function fillDetails({ id, secret, publicKey, privateKey }) {
+function fillDetails({ id, secret, publicKey, privateKey, storedServer }) {
   clientIdEl.innerText = id;
   clientSecretEl.innerText = secret;
   publicKeyEl.innerText = publicKey;
   privateKeyEl.innerText = privateKey.replace(/\n/g, '');
+  envSelect.value = storedServer
+  server = storedServer
 }
 
 function createRequestUrlButton(thingsToStore) {
