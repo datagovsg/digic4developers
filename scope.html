@@ -52,6 +52,14 @@
                 let scopesText = Array.from(formData.keys()).join(',')
                 scopesEl.innerText = scopesText
             })
+            
+            const approvedScopes = ['uinfin','name','sex','race','secondaryrace','dob','residentialstatus','nationality','birthcountry','passportnumber','passportexpirydate','passtype','passstatus','passexpirydate','mobileno','email','regadd','mailadd','employment']
+            approvedScopes.forEach(function(scope) { document.getElementsByName(scope)[0].checked = true })
+            let event = new Event('input', {
+                'bubbles': true,
+                'cancelable': true
+            })
+            document.querySelector('input').dispatchEvent(event)
         })()
     </script>
 </body>
