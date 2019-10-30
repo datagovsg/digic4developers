@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Client Registration</title>
+  <title>SGID Developers Utility</title>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -13,196 +13,13 @@
 </head>
 
 <body>
-  <h1>Register Your Business to Access Digic </h1>
-  <div class="input-field col s12">
-    <select id="env-select">
-      <option value="https://test.digital-ic.sg">Test</option>
-      <option value="https://staging.digital-ic.sg" selected>Staging</option>
-    </select>
-    <label>Environment</label>
-  </div>
-  <form id="step1" class="card">
-    <div class="input-field col s12">
-      <input type="text" class="form-control" id="client-name" placeholder="ABC Pte Ltd">
-      <label for="client-name">Business Name</label>
-    </div>
-    <div class="input-field col s12">
-      <input type="url" class="form-control" id="redirect-url" placeholder="https://abc.xyz/callback">
-      <label for="redirect-url">Redirect URL</label>
-    </div>
-    <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
-    <br />
-    <br />
-    <button class="btn waves-effect waves-light" id="submit" name="action">Submit
-      <i class="material-icons right">send</i>
-    </button>
-  </form>
 
-  <p id="error-msg"></p>
 
-  <div id="step2" class="card" hidden>
+  <a class="waves-effect waves-light btn-large" href="/scope.html"><i class="material-icons right">radio_button_checked</i>SCOPES</a>
+  <a class="waves-effect waves-light blue btn-large" href="/snippets.html"><i class="material-icons right">code</i>CODE</a>
+  <a class="waves-effect waves-light red lighten-2 btn-large" href="/keygen.html"><i class="material-icons right">vpn_key</i>KEYGEN</a>
 
-    <!-- BUTTON HTML CODE -->
-    <div class="flex-container">
-      <div class="half" style="margin-right: 40px">
-        <div class="row">
-          <h5>Button HTML Code</h5>
-        </div>
-        <div class="code">
-          <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#button-code">COPY
-            <i class="material-icons right">content_copy</i>
-          </button>
-          <pre id="button-code">
-          </pre>
-        </div>
-      </div>
-
-      <!-- SERVER SIDE CODE -->
-      <div class="half">
-        <div class="row">
-          <h5>Server Code</h5>
-        </div>
-        <div class="code">
-          <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#server-code">COPY
-            <i class="material-icons right">content_copy</i>
-          </button>
-          <pre id="server-code">
-          </pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <h5>Client ID</h5>
-      <p id="client-id"></p>
-    </div>
-    <div class="row" style="position: relative">
-      <h5>Client Secret</h5>
-      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#client-secret">COPY
-        <i class="material-icons right">content_copy</i>
-      </button>
-      <p>••••••••••</p>
-      <p id="client-secret" class="dontshow"></p>
-    </div>
-    <div class="row" style="position: relative">
-      <h5>Private Key</h5>
-      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#private-key">COPY
-        <i class="material-icons right">content_copy</i>
-      </button>
-      <p>••••••••••</p>
-      <p id="private-key" class="dontshow">wefwefwe</p>
-    </div>
-
-    <div class="row">
-      <h5>Public Key</h5>
-      <p id="public-key"></p>
-    </div>
-
-    <!-- BUTTON -->
-    <a class="btn waves-effect waves-light blue darken-1" id="login-btn">Login with Digic
-      <i class="material-icons right">fingerprint</i>
-    </a>
-  </div>
-
-  <div id="step3" class="card" hidden>
-    <div class="row">
-      <h5>Authorization Code</h5>
-      <p id="auth-code"></p>
-    </div>
-
-    <p id="exchange-url" class="code">
-    </p>
-
-    <button class="btn waves-effect waves-light" id="exchange-btn" name="action">Exchange Authorization Code for Access
-      Token
-      <i class="material-icons right">compare_arrows</i>
-    </button>
-  </div>
-
-  <div id="step4" class="card" hidden>
-    <div class="row">
-      <h5>Response</h5>
-      <p id="access-token"></p>
-    </div>
-    <div class="input-field col s12">
-      <input type="text" class="form-control" id="client-secret-2">
-      <label for="client-secret-2" class="active">Client Secret</label>
-    </div>
-    <button class="btn waves-effect waves-light" id="decode-id" name="action">Verify and Decode id_token jwt
-      <i class="material-icons right">verified_user</i>
-    </button>
-  </div>
-
-  <div id="step5" class="card" hidden>
-    <div class="row">
-      <h5>Successfully Decoded</h5>
-      <p id="decoded-id"></p>
-    </div>
-    <p id="userinfo-url" class="code">
-    </p>
-    <button class="btn waves-effect waves-light" id="userinfo-btn" name="action">Get UserInfo JWE
-      <i class="material-icons right">face</i>
-    </button>
-  </div>
-
-  <div id="step6" class="card" hidden>
-    <div class="row">
-      <h5>UserInfo in JWE</h5>
-      <p id="jwe"></p>
-    </div>
-    <div class="row">
-      <h5>Private Key</h5>
-      <p id="private-key-2"></p>
-    </div>
-    <button class="btn waves-effect waves-light" id="decrypt-btn" name="action">Decrypt
-      <i class="material-icons right">lock_open</i>
-    </button>
-  </div>
-
-  <div id="step7" class="card" hidden>
-    <div class="row">
-      <h5>UserInfo in JWS</h5>
-      <p id="jws"></p>
-    </div>
-    <button class="btn waves-effect waves-light" id="decode-btn" name="action">Verify and Decode
-      <i class="material-icons right">verified_user</i>
-    </button>
-  </div>
-
-  <div id="step8" class="card" hidden>
-    <div class="row">
-      <h5>UserInfo Verified Successfully</h5>
-      <p id="user-info"></p>
-    </div>
-    <button class="btn waves-effect waves-light green accent-3" id="start-over-btn" name="action">Start over
-      <i class="material-icons right">refresh</i>
-    </button>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="bundle.js"></script>
 </body>
 
 </html>
-
-
-<!--demo dev portal
-
-Name 
-Public Key
-id
-Secret
-redirect uri 
-
-Client id
-Secret
-
-
-Display 
-Client id 
-Secret
-Public Key
-
-Public private key on the client side 
--->

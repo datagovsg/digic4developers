@@ -18,59 +18,15 @@ div {
   font-family: "Noto Sans HK", sans-serif;
 }
 
-.input-field.col label {
-  left: 0;
-}
-
-.card {
-  padding: 5vh;
-  margin-top: 4vh;
-}
-
-.code {
+pre code span {
   font-family: monospace;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+}
+
+.code-div {
   position: relative;
 }
 
 .copy-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.flex-container {
-  display: flex;
-}
-
-.half {
-  width: 50%;
-}
-
-pre {
-  white-space: pre-wrap !important;
-  height: 250px;
-  overflow: auto;
-}
-
-.dontshow {
-  position: absolute;
-  display: block;
-  height: 1px;
-  overflow: hidden;
-  width: 1px;
-}
-
-.checkbox-p {
-  display: inline-flex;
-  min-width: 200px;
-  width: 24vw;
-  padding: 0 5vw;
-}
-
-.checkbox-p span {
-  color: black;
-  word-break: break-word;
+  right: 0;
 }

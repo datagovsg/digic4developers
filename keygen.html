@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code Snippets</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./prism/prism.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <h1>Public Private Key Pair Generation</h1>
+    <button class="btn waves-effect waves-light" id="generate-keys">GENERATE 1024-bit
+        <i class="material-icons right">vpn_key</i>
+    </button>
+    <button class="btn waves-effect waves-light" id="generate-keys-big">GENERATE 2048-bit
+        <i class="material-icons right">vpn_key</i>
+    </button>
+
+    <div class="row">
+        <h5>Public Key</h5>
+    </div>
+    <div class="code-div">
+        <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#public-key">COPY
+            <i class="material-icons right">content_copy</i>
+        </button>
+        <pre>
+<code id="public-key">
+</code>
+        </pre>
+    </div>
+    <div class="row">
+            <h5>Private Key</h5>
+    </div>
+    <div class="code-div">
+        <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#private-key">COPY
+            <i class="material-icons right">content_copy</i>
+        </button>
+        <pre>
+<code id="private-key">
+</code>
+            </pre>
+    </div>
+
+    <script src="./prism/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="bundle.js"></script>
+</body>
+
+</html>

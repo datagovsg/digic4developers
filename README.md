@@ -1,2 +1,1 @@
-# digic4developers
-Developers portal for digic 
+# Helpful tools for SGID

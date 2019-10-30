@@ -15,8 +15,10 @@
 <body>
     <form action="#" id="checkboxes">
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
     <script>
         (async function () {
+            new ClipboardJS('.btn')
             let res = await fetch('./scope.txt')
             const scope = await res.text()
             let scopes = scope.split('\n')
@@ -32,7 +34,11 @@
 
             // Render checkboxes
             let checkboxesDiv = document.querySelector('#checkboxes')
-            let checkboxesHTML = '<h5 id="scopes"></h5>'
+            let checkboxesHTML = `
+<p class="language-javascript" id="scopes"></p>
+<button class="btn waves-effect waves-light copy-btn-2" name="action" data-clipboard-target="#scopes">COPY
+    <i class="material-icons right">content_copy</i>
+</button>`
             scopes.forEach((scope) => {
                 if (scope.length !== 2) {
                     return

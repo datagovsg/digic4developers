@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code Snippets</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./prism/prism.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <h1>Code Snippets</h1>
+    <div class="row">
+        <h5>Decode ID token without verification</h5>
+    </div>
+    <div class="code-div">
+        <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#idtok-code">COPY
+            <i class="material-icons right">content_copy</i>
+        </button>
+        <pre>
+<code class="language-javascript" id="idtok-code">
+const jwt = require('jsonwebtoken')
+
+function decodeJWT(token) {
+    return jwt.decode(token)
+}
+</code>
+                </pre>
+    </div>
+
+    <div class="row">
+        <h5>Decode UserInfo JWE</h5>
+    </div>
+    <div class="code-div">
+        <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#server-code">COPY
+            <i class="material-icons right">content_copy</i>
+        </button>
+        <pre>
+<code class="language-javascript" id="server-code">
+const { JWE, JWK } = require('node-jose')
+
+async function decryptJWE(encryptedPayload, privateKey) {
+    try {
+        // import privateKey as a jwk
+        const key = await JWK.asKey(privateKey, 'pem')
+        // decrypt jwe
+        const result = await JWE.createDecrypt(key).decrypt(encryptedPayload)
+        // parse plaintext buffer to string then to JSON
+        return JSON.parse(result.plaintext.toString())
+    } catch (e) {
+        console.error(e)
+    }
+}
+</code>
+        </pre>
+    </div>
+
+    <div class="row">
+        <h5>Verify Signature</h5>
+    </div>
+    <div class="code-div">
+        <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#sign-code">COPY
+            <i class="material-icons right">content_copy</i>
+        </button>
+        <pre>
+<code class=" language-javascript" id="sign-code">
+function verifySignatures(decrypted, userPublicKey) {
+    for (let fieldKey in decrypted) {
+        const { value, signature } = decrypted[fieldKey]
+        const verify = crypto.createVerify('SHA256').update(JSON.stringify({ [fieldKey]: value })).end()
+        decrypted[fieldKey].verified = verify.verify(userPublicKey, signature, 'hex')
+    }
+}</code>
+        </pre>
+    </div>
+
+    <script src="./prism/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
