@@ -16539,7 +16539,7 @@ module.exports={
   "_args": [
     [
       "elliptic@6.4.1",
-      "C:\\Users\\ian\\Documents\\digic4developers"
+      "/Users/ian/Documents/sgid-tools"
     ]
   ],
   "_development": true,
@@ -16565,7 +16565,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz",
   "_spec": "6.4.1",
-  "_where": "C:\\Users\\ian\\Documents\\digic4developers",
+  "_where": "/Users/ian/Documents/sgid-tools",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
