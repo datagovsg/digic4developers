@@ -17,7 +17,7 @@
 
     <h1>Code Snippets (Node.js) </h1>
     <div class="row">
-        <h5>Decode ID token without verification</h5>
+        <h5>Decode ID token and verify signature</h5>
     </div>
     <div class="code-div">
         <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#idtok-code">COPY
@@ -25,10 +25,19 @@
         </button>
         <pre>
 <code class="language-javascript" id="idtok-code">
-const jwt = require('jsonwebtoken')
+const { JWS, JWK } = require('node-jose')
+const axios = require('axios')
 
-function decodeJWT(token) {
-    return jwt.decode(token)
+async function decodeIdToken(token, baseUrl) {
+	// fetch server public key
+	const response = await axios.get(baseUrl + '/v1/oauth/certs')
+	// create JWK
+	const publicKey = await JWK.asKey(response.data.keys[0])
+	// decode and verify id token
+	const { payload } = await JWS.createVerify(publicKey).verify(token)
+	// parse payload and retrieve sub
+	const { sub } = JSON.parse(payload.toString())
+	return sub
 }
 </code>
                 </pre>
@@ -71,9 +80,11 @@ async function decryptJWE(encryptedPayload, privateKey) {
         <pre>
 <code class=" language-javascript" id="sign-code">
 function verifySignatures(decrypted, userPublicKey) {
-    for (let fieldKey in decrypted) {
+    for (const fieldKey in decrypted) {
         const { value, signature } = decrypted[fieldKey]
+        // Verify sha256 signature of each field
         const verify = crypto.createVerify('SHA256').update(JSON.stringify({ [fieldKey]: value })).end()
+        // Assign verified flag for each field
         decrypted[fieldKey].verified = verify.verify(userPublicKey, signature, 'hex')
     }
 }</code>

@@ -18,8 +18,8 @@ div {
   font-family: "Noto Sans HK", sans-serif;
 }
 
-pre code span {
-  font-family: monospace;
+pre code, pre code span {
+  font-family: monospace !important;
 }
 
 .code-div {
