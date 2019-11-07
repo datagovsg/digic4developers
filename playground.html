@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>sgID API Explorer</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/playground.css">
+</head>
+
+<body>
+  <h1>sgID API Explorer</h1>
+  <div class="input-field col env-select-container">
+    <select id="server">
+      <option value="https://api.id.gov.sg/v1">Production - https://api.id.gov.sg/v1</option>
+      <option value="https://api-staging.id.gov.sg/v1" selected>Staging - https://api-staging.id.gov.sg/v1</option>
+    </select>
+    <label>Environment</label>
+  </div>
+
+
+  <div id="auth-card" class="card">
+    <h4>Authorization Endpoint</h4>
+    <div class="endpoint">
+      <span class="method center">GET</span>
+      <span class="url center">
+        /oauth/authorize</span>
+    </div>
+
+    <h5>Query Parameters</h5>
+
+    <p class="param">client_id</p>
+    <p class="param-desc">Your Client ID</p>
+    <div class="input-field col">
+      <input type="text" class="form-control" id="clientid" placeholder="abc123">
+    </div>
+
+    <p class="param">redirect_uri</p>
+    <p class="param-desc">Your registered callback url</p>
+    <div class="param-input input-field col">
+      <input type="url" class="form-control" id="redirecturi" placeholder="https://abc.xyz/callback">
+    </div>
+
+    <p class="param">purpose</p>
+    <p class="param-desc">Purpose of your transaction</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="purpose" placeholder="for testing">
+    </div>
+
+    <p class="param">scope</p>
+    <p class="param-desc">Requested scopes separated by space. openid is a required scope.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="scope" placeholder="openid name dob">
+    </div>
+    <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
+
+    <p class="param">response_type</p>
+    <p class="param-desc">Must be set to <i><b>code</b></i>. Only authorization code flow is supported currently.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="reponse-type" placeholder="code" value="code" disabled>
+    </div>
+
+    <p class="param">state (Optional)</p>
+    <p class="param-desc">An opaque arbitrary alphanumeric string your app adds to the initial request that sgid
+      includes when redirecting back to your application.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="state" placeholder="randomstring">
+    </div>
+
+
+    <div class="code-div">
+      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#auth-url">COPY
+        <i class="material-icons right">content_copy</i>
+      </button>
+      <pre><code id="auth-url">ewfowe</code></pre>
+    </div>
+
+    <button class="btn waves-effect waves-light" name="action" id="auth-test">Test in new tab
+      <i class="material-icons right">open_in_new</i>
+    </button>
+  </div>
+
+  <div id="token-card" class="card">
+    <h4>Token Endpoint</h4>
+    <div class="endpoint">
+      <span class="method center blue darken-4">POST</span>
+      <span class="url center">
+        /oauth/token</span>
+    </div>
+
+    <h5>Request Body</h5>
+
+    <p class="param">client_id</p>
+    <p class="param-desc">Your Client ID</p>
+    <div class="input-field col">
+      <input type="text" class="form-control" id="clientid" placeholder="abc123">
+    </div>
+
+    <p class="param">redirect_uri</p>
+    <p class="param-desc">Your registered callback url</p>
+    <div class="param-input input-field col">
+      <input type="url" class="form-control" id="redirecturi" placeholder="https://abc.xyz/callback">
+    </div>
+
+    <p class="param">purpose</p>
+    <p class="param-desc">Purpose of your transaction</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="purpose" placeholder="for testing">
+    </div>
+
+    <p class="param">scope</p>
+    <p class="param-desc">Requested scopes separated by space. openid is a required scope.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="scope" placeholder="openid name dob">
+    </div>
+    <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
+
+    <p class="param">response_type</p>
+    <p class="param-desc">Must be set to <i><b>code</b></i>. Only authorization code flow is supported currently.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="reponse-type" placeholder="code" value="code" disabled>
+    </div>
+
+    <p class="param">state (Optional)</p>
+    <p class="param-desc">An opaque arbitrary alphanumeric string your app adds to the initial request that sgid
+      includes when redirecting back to your application.</p>
+    <div class="param-input input-field col">
+      <input class="form-control" id="state" placeholder="randomstring">
+    </div>
+
+
+    <div class="code-div">
+      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#auth-url">COPY
+        <i class="material-icons right">content_copy</i>
+      </button>
+      <pre><code id="auth-url">ewfowe</code></pre>
+    </div>
+
+    <button class="btn waves-effect waves-light" name="action" id="auth-test">Test in new tab
+      <i class="material-icons right">open_in_new</i>
+    </button>
+  </div>
+
+  <div id="step3" class="card" hidden>
+    <div class="row">
+      <h5>Authorization Code</h5>
+      <p id="auth-code"></p>
+    </div>
+
+    <p id="exchange-url" class="code">
+    </p>
+
+    <button class="btn waves-effect waves-light" id="exchange-btn" name="action">Exchange Authorization Code for Access
+      Token
+      <i class="material-icons right">compare_arrows</i>
+    </button>
+  </div>
+
+  <div id="step4" class="card" hidden>
+    <div class="row">
+      <h5>Response</h5>
+      <p id="access-token"></p>
+    </div>
+    <div class="input-field col">
+      <input type="text" class="form-control" id="client-secret-2">
+      <label for="client-secret-2" class="active">Client Secret</label>
+    </div>
+    <button class="btn waves-effect waves-light" id="decode-id" name="action">Verify and Decode id_token jwt
+      <i class="material-icons right">verified_user</i>
+    </button>
+  </div>
+
+  <div id="step5" class="card" hidden>
+    <div class="row">
+      <h5>Successfully Decoded</h5>
+      <p id="decoded-id"></p>
+    </div>
+    <p id="userinfo-url" class="code">
+    </p>
+    <button class="btn waves-effect waves-light" id="userinfo-btn" name="action">Get UserInfo JWE
+      <i class="material-icons right">face</i>
+    </button>
+  </div>
+
+  <div id="step6" class="card" hidden>
+    <div class="row">
+      <h5>UserInfo in JWE</h5>
+      <p id="jwe"></p>
+    </div>
+    <div class="row">
+      <h5>Private Key</h5>
+      <p id="private-key-2"></p>
+    </div>
+    <button class="btn waves-effect waves-light" id="decrypt-btn" name="action">Decrypt
+      <i class="material-icons right">lock_open</i>
+    </button>
+  </div>
+
+  <div id="step7" class="card" hidden>
+    <div class="row">
+      <h5>UserInfo in JWS</h5>
+      <p id="jws"></p>
+    </div>
+    <button class="btn waves-effect waves-light" id="decode-btn" name="action">Verify and Decode
+      <i class="material-icons right">verified_user</i>
+    </button>
+  </div>
+
+  <div id="step8" class="card" hidden>
+    <div class="row">
+      <h5>UserInfo Verified Successfully</h5>
+      <p id="user-info"></p>
+    </div>
+    <button class="btn waves-effect waves-light green accent-3" id="start-over-btn" name="action">Start over
+      <i class="material-icons right">refresh</i>
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="bundle.js"></script>
+  <script src="playground.js"></script>
+</body>
+
+</html>

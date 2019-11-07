@@ -18,8 +18,15 @@ div {
   font-family: "Noto Sans HK", sans-serif;
 }
 
-pre code, pre code span {
+pre code,
+pre code span {
   font-family: monospace !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .code-div {
@@ -30,3 +37,4 @@ pre code, pre code span {
   position: absolute;
   right: 0;
 }
+

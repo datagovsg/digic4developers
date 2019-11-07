@@ -1,0 +1,55 @@
+.card {
+  padding: 5vh 3vw;
+}
+
+.env-select-container {
+  margin: 5vh 3vw;
+}
+
+.endpoint {
+  display: inline-flex;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.endpoint .method {
+  background-color: green;
+  color: white;
+  line-height: 50px;
+  padding: 0 30px;
+}
+
+.endpoint .url {
+  background-color: black;
+  color: white;
+  font-family: monospace;
+  line-height: 50px;
+  padding: 0 30px;
+}
+
+.param {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.param-desc {
+  color: rgb(100, 100, 100);
+  font-style: italic;
+}
+
+.code-div {
+  background: black;
+  color: white;
+  font-family: monospace;
+  min-height: 80px;
+  padding: 20px;
+}
+
+/* override */
+.input-field.col label {
+  left: 0;
+}
+
+input[type="url"]:not(.browser-default):disabled {
+  cursor: not-allowed;
+}

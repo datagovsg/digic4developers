@@ -1,5 +1,3 @@
-const NodeRSA = require('node-rsa')
-
 function generateRSAKeyPairs(b) {
   const key = new NodeRSA({ b });
   const publicKey = key.exportKey('pkcs8-public-pem')
