@@ -23,7 +23,7 @@
     <label>Environment</label>
   </div>
 
-
+  <!-- AUTH -->
   <div id="auth-card" class="card">
     <h4>Authorization Endpoint</h4>
     <div class="endpoint">
@@ -62,7 +62,7 @@
     <p class="param">response_type</p>
     <p class="param-desc">Must be set to <i><b>code</b></i>. Only authorization code flow is supported currently.</p>
     <div class="param-input input-field col">
-      <input class="form-control" id="reponse-type" placeholder="code" value="code" disabled>
+      <input class="form-control" id="responsetype" placeholder="code" value="code" disabled>
     </div>
 
     <p class="param">state (Optional)</p>
@@ -77,13 +77,17 @@
       <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#auth-url">COPY
         <i class="material-icons right">content_copy</i>
       </button>
-      <pre><code id="auth-url">ewfowe</code></pre>
+      <pre><code id="auth-url"></code></pre>
     </div>
 
     <button class="btn waves-effect waves-light" name="action" id="auth-test">Test in new tab
       <i class="material-icons right">open_in_new</i>
     </button>
   </div>
+
+  <!-- END AUTH -->
+
+  <!-- TOKEN -->
 
   <div id="token-card" class="card">
     <h4>Token Endpoint</h4>
@@ -96,55 +100,50 @@
     <h5>Request Body</h5>
 
     <p class="param">client_id</p>
-    <p class="param-desc">Your Client ID</p>
+    <p class="param-desc">Your client ID</p>
     <div class="input-field col">
-      <input type="text" class="form-control" id="clientid" placeholder="abc123">
+      <input type="text" class="form-control" id="clientid2" placeholder="abc123">
+    </div>
+
+    <p class="param">client_secret</p>
+    <p class="param-desc">Your client secret</p>
+    <div class="input-field col">
+      <input type="text" class="form-control" id="clientsecret" placeholder="secret123">
     </div>
 
     <p class="param">redirect_uri</p>
     <p class="param-desc">Your registered callback url</p>
     <div class="param-input input-field col">
-      <input type="url" class="form-control" id="redirecturi" placeholder="https://abc.xyz/callback">
+      <input type="url" class="form-control" id="redirecturi2" placeholder="https://abc.xyz/callback">
     </div>
 
-    <p class="param">purpose</p>
-    <p class="param-desc">Purpose of your transaction</p>
+    <p class="param">grant_type</p>
+    <p class="param-desc">Must be set to <i><b>authorization_code</b></i>. Only authorization code flow is supported
+      currently.</p>
     <div class="param-input input-field col">
-      <input class="form-control" id="purpose" placeholder="for testing">
+      <input class="form-control" id="granttype" placeholder="authorization_code" value="authorization_code"
+        disabled>
     </div>
 
-    <p class="param">scope</p>
-    <p class="param-desc">Requested scopes separated by space. openid is a required scope.</p>
+    <p class="param">code</p>
+    <p class="param-desc">Authorization code returned in the callback url.</p>
     <div class="param-input input-field col">
-      <input class="form-control" id="scope" placeholder="openid name dob">
-    </div>
-    <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
-
-    <p class="param">response_type</p>
-    <p class="param-desc">Must be set to <i><b>code</b></i>. Only authorization code flow is supported currently.</p>
-    <div class="param-input input-field col">
-      <input class="form-control" id="reponse-type" placeholder="code" value="code" disabled>
-    </div>
-
-    <p class="param">state (Optional)</p>
-    <p class="param-desc">An opaque arbitrary alphanumeric string your app adds to the initial request that sgid
-      includes when redirecting back to your application.</p>
-    <div class="param-input input-field col">
-      <input class="form-control" id="state" placeholder="randomstring">
+      <input class="form-control" id="code" placeholder="randomstring">
     </div>
 
 
     <div class="code-div">
-      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#auth-url">COPY
+      <button class="btn waves-effect waves-light copy-btn" name="action" data-clipboard-target="#token-body">COPY
         <i class="material-icons right">content_copy</i>
       </button>
-      <pre><code id="auth-url">ewfowe</code></pre>
+      <pre><code id="token-body"></code></pre>
     </div>
 
-    <button class="btn waves-effect waves-light" name="action" id="auth-test">Test in new tab
-      <i class="material-icons right">open_in_new</i>
+    <button class="btn waves-effect waves-light" name="action" id="auth-test">Test
+      <i class="material-icons right">send</i>
     </button>
   </div>
+  <!-- END TOKEN -->
 
   <div id="step3" class="card" hidden>
     <div class="row">

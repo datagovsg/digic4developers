@@ -12,9 +12,11 @@ new ClipboardJS('.btn')
 var serverEl = getEl('server')
 var clientIdEl = getEl('clientid')
 var redirectUriEl = getEl('redirecturi')
-var purposeEl = getEl('client-id')
+var purposeEl = getEl('purpose')
 var scopeEl = getEl('scope')
 var stateEl = getEl('state')
+var clientSecretEl = getEl('clientsecret')
+var codeEl = getEl('code')
 
 var data = {
   server: server.value,
@@ -22,25 +24,31 @@ var data = {
   redirecturi: 'REDIRECT_URI',
   purpose: 'PURPOSE',
   scope: 'sgid name dob',
-  state: 'STATE'
+  state: 'STATE',
+  clientsecret: 'CLIENT_SECRET',
+  code: 'AUTH_CODE',
 }
 
 // STARTUP
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('select')
   M.FormSelect.init(elems, {})
-  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl].forEach(function (el) {
+})
+window.onload = function () {
+  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl].forEach(function (el) {
     el.oninput = debouncedUpdate.bind(this)
     el.onchange = debouncedUpdate.bind(this)
   })
   createAuthorizationUrl()
-})
+  updateTokenBody()
+}
 
 var debouncedUpdate = function (event) {
   _.debounce(function () {
     var id = event.srcElement.id;
     data[id] = event.srcElement.value;
     createAuthorizationUrl()
+    updateTokenBody()
   }, 300)()
 }
 
@@ -59,7 +67,23 @@ getEl('auth-test').onclick = function () {
   window.open(getEl('auth-url').innerText, '_blank');
 }
 
+function updateTokenBody() {
 
+  var tokenBody = `\
+  POST /oauth/token
+  Content-Type: application/x-www-form-urlencoded
+
+  {
+    "client_id": \"${data.clientid}\"
+    "client_secret": \"${data.clientsecret}\"
+    "redirect_uri": \:${data.redirecturi}\"
+    "grant_type": "authorization_code"
+    "code": \"${data.code}\"
+  }
+  `
+
+  getEl('token-body').innerText = tokenBody
+}
 
 
 //  Step 3: Generate Login Button
