@@ -11,7 +11,9 @@ new ClipboardJS('.btn')
 
 var serverEl = getEl('server')
 var clientIdEl = getEl('clientid')
+var clientIdEl2 = getEl('clientid2')
 var redirectUriEl = getEl('redirecturi')
+var redirectUriEl2 = getEl('redirecturi2')
 var purposeEl = getEl('purpose')
 var scopeEl = getEl('scope')
 var stateEl = getEl('state')
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })
 window.onload = function () {
-  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl].forEach(function (el) {
+  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl, clientIdEl2, redirectUriEl2].forEach(function (el) {
     el.oninput = debouncedUpdate.bind(this)
     el.onchange = debouncedUpdate.bind(this)
   })
@@ -53,13 +55,22 @@ window.onload = function () {
 }
 
 var debouncedUpdate = function (event) {
-  _.debounce(function () {
-    var id = event.srcElement.id;
-    data[id] = event.srcElement.value;
+  return _.debounce(function () {
+    var id = event.srcElement.id.replace(/[0-9]/g, '')
+    data[id] = event.srcElement.value
     createAuthorizationUrl()
     updateTokenBody()
     updateUserInfoRequest()
-  }, 300)()
+    var dataBinding = event.srcElement.getAttribute("data-binding")
+    if (dataBinding) {
+      var sameEls = document.querySelectorAll(`[data-binding="${dataBinding}"]`)
+      sameEls.forEach(function(el) {
+        if (el !== event.srcElement) {
+          el.value = data[id]
+        }
+      })
+    }
+  }, 300)
 }
 
 function createAuthorizationUrl() {
