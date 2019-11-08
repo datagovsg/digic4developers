@@ -32,6 +32,8 @@ var data = {
 
 // STARTUP
 document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.dropdown-trigger');
+  M.Dropdown.init(elems, { alignment: 'bottom', closeOnClick: false, constrainWidth: false });
   var elems = document.querySelectorAll('select')
   M.FormSelect.init(elems, {})
   var collapsibles = document.querySelectorAll('.collapsible');
@@ -47,6 +49,7 @@ window.onload = function () {
   createAuthorizationUrl()
   updateTokenBody()
   updateUserInfoRequest()
+  populateScopes()
 }
 
 var debouncedUpdate = function (event) {
@@ -55,6 +58,7 @@ var debouncedUpdate = function (event) {
     data[id] = event.srcElement.value;
     createAuthorizationUrl()
     updateTokenBody()
+    updateUserInfoRequest()
   }, 300)()
 }
 
@@ -130,5 +134,48 @@ getEl('userinfo-test').onclick = function () {
   }).then(function (jwe) {
     getEl('userinfo-response-div').classList.remove('hidden')
     getEl('userinfo-response').innerText = jwe
+  })
+}
+
+function populateScopes() {
+  var sgIdScopes = [
+    'nric_number',
+    'name',
+    'sex',
+    'race',
+    'secondary_race',
+    'date_of_birth',
+    'residential_status',
+    'nationality',
+    'birth_country',
+    'passport_number',
+    'passport_expiry_date',
+    'pass_type',
+    'pass_status',
+    'pass_expiry_date',
+    'mobile_number',
+    'email',
+    'registered_address',
+    'mailing_address',
+    'employer_name'
+  ]
+
+  sgIdScopes.forEach(function (scope) {
+    var checkboxesDiv = getEl('scope-checkboxes')
+    checkboxesDiv.innerHTML += `\
+    <p class="checkbox-p">
+      <label>
+        <input type="checkbox" name="${scope}" />
+        <span>${scope.replace(/_/g, ' ')}</span>
+      </label>
+    </p>\
+    `
+    checkboxesDiv.addEventListener('input', function () {
+      let formData = new FormData(checkboxesDiv);
+      let scopesText = ['openid'].concat(Array.from(formData.keys())).join(' ')
+      getEl('scope').value = scopesText
+      data.scope = scopesText
+      createAuthorizationUrl()
+    })
   })
 }

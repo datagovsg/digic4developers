@@ -27,6 +27,10 @@
   padding: 0 30px;
 }
 
+.param-title {
+  margin-bottom: 30px;
+}
+
 .param {
   font-family: monospace;
   font-weight: bold;
@@ -56,6 +60,11 @@
 .input-field.with-prefix input {
   padding-left: 60px;
   width: calc(100% - 60px);
+}
+
+.scope-btn {
+  position: absolute;
+  right: 0;
 }
 
 /* override */
@@ -96,4 +105,9 @@ input[type="url"]:not(.browser-default):disabled {
 
 .card {
   padding: 0;
+}
+
+.dropdown-content {
+  padding: 10px;
+  max-height: 50vh;
 }

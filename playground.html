@@ -36,8 +36,7 @@
       </div>
 
       <div class="collapsible-body">
-        <h5>Query Parameters</h5>
-
+        <h5 class="param-title">Query Parameters</h5>
         <p class="param">client_id</p>
         <p class="param-desc">Your Client ID</p>
         <div class="input-field col">
@@ -60,8 +59,10 @@
         <p class="param-desc">Requested scopes separated by space. openid is a required scope.</p>
         <div class="param-input input-field col">
           <input class="form-control" id="scope" placeholder="openid name dob">
+          <button class="btn waves-effect waves-light dropdown-trigger" data-target='scope-checkboxes'>Select Scopes</button>
         </div>
-        <a href="./scope.html">See all scopes</a> (<i>openid</i> needs to be added)
+        <form id="scope-checkboxes" class="dropdown-content">
+        </form>
 
         <p class="param">response_type</p>
         <p class="param-desc">Must be set to <i><b>code</b></i>. Only authorization code flow is supported currently.
@@ -108,7 +109,7 @@
         </div>
       </div>
       <div class="collapsible-body">
-        <h5>Request Body</h5>
+        <h5 class="param-title">Request Body</h5>
 
         <p class="param">client_id</p>
         <p class="param-desc">Your client ID</p>
@@ -174,7 +175,7 @@
         </div>
       </div>
       <div class="collapsible-body">
-        <h5>Request Header</h5>
+        <h5 class="param-title">Request Header</h5>
         <p class="param">
           Authorization
         </p>
