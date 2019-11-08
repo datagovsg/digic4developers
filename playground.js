@@ -19,7 +19,7 @@ var clientSecretEl = getEl('clientsecret')
 var codeEl = getEl('code')
 
 var data = {
-  server: server.value,
+  server: serverEl.value,
   clientid: 'CLIENT_ID',
   redirecturi: 'REDIRECT_URI',
   purpose: 'PURPOSE',
@@ -27,12 +27,17 @@ var data = {
   state: 'STATE',
   clientsecret: 'CLIENT_SECRET',
   code: 'AUTH_CODE',
+  accesstoken: 'ACCESS_TOKEN'
 }
 
 // STARTUP
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('select')
   M.FormSelect.init(elems, {})
+  var collapsibles = document.querySelectorAll('.collapsible');
+  M.Collapsible.init(collapsibles, {
+    accordion: false
+  });
 })
 window.onload = function () {
   [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl].forEach(function (el) {
@@ -41,6 +46,7 @@ window.onload = function () {
   })
   createAuthorizationUrl()
   updateTokenBody()
+  updateUserInfoRequest()
 }
 
 var debouncedUpdate = function (event) {
@@ -68,206 +74,61 @@ getEl('auth-test').onclick = function () {
 }
 
 function updateTokenBody() {
-
   var tokenBody = `\
-  POST /oauth/token
-  Content-Type: application/x-www-form-urlencoded
+POST ${data.server}/oauth/token
+Content-Type: application/x-www-form-urlencoded
 
-  {
-    "client_id": \"${data.clientid}\"
-    "client_secret": \"${data.clientsecret}\"
-    "redirect_uri": \:${data.redirecturi}\"
-    "grant_type": "authorization_code"
-    "code": \"${data.code}\"
-  }
-  `
-
+{
+  "client_id": \"${data.clientid}\"
+  "client_secret": \"${data.clientsecret}\"
+  "redirect_uri": \"${data.redirecturi}\"
+  "grant_type": "authorization_code"
+  "code": \"${data.code}\"
+}`
   getEl('token-body').innerText = tokenBody
 }
 
-
-//  Step 3: Generate Login Button
-var step3 = getEl('step3')
-var authCodeEl = getEl('auth-code')
-var exchangeUrlEl = getEl('exchange-url')
-var exchangeBtn = getEl('exchange-btn')
-function checkUrlQuery() {
-  var params = new URLSearchParams(window.location.search);
-  var storedState = params.get('state')
-  if (!storedState) {
-    return
-  }
-  var state = JSON.parse(atob(storedState))
-  var { name, redirectUri, id, secret } = state
-  nameEl.value = name
-  redirectUriEl.value = redirectUri
-  fillDetails(state)
-  createRequestUrlButton(state)
-  step2.hidden = false;
-
-
-  var authCode = params.get('code')
-  authCodeEl.innerText = authCode
-
-  scrollToView(step3);
-
-
-  var exchangeUrl = `${server}/oauth/token`
-  var exchangeBody = querystring.stringify({
-    grant_type: 'authorization_code',
-    code: authCode,
-    client_id: id,
-    client_secret: secret,
-    redirect_uri: redirectUri
-  })
-  var exchangeCode = `\
-  POST ${exchangeUrl}
-  Content-Type: application/x-www-form-urlencoded
-
-    ${exchangeBody.replace(/[&]/g, (a) => `${a}\n`)}
-  `
-
-  exchangeUrlEl.innerText = exchangeCode
-  exchangeBtn.onclick = onExchangeClick.bind(this, exchangeUrl, exchangeBody)
-
-}
-checkUrlQuery()
-
-function onExchangeClick(exchangeUrl, exchangeBody) {
-  console.log(exchangeUrl)
-  return fetch(exchangeUrl, {
+getEl('token-test').onclick = function () {
+  return fetch(`${data.server}/oauth/token`, {
     method: 'POST',
     headers: {
       "Accept": "application/json",
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: exchangeBody,
+    body: querystring.stringify({
+      "client_id": data.clientid,
+      "client_secret": data.clientsecret,
+      "redirect_uri": data.redirecturi,
+      "grant_type": "authorization_code",
+      "code": data.code
+    }),
+  }).then(function (response) {
+    return response.json()
+  }).then(function (accessTokenJson) {
+    getEl('token-response-div').classList.remove('hidden')
+    getEl('token-response').innerText = JSON.stringify(accessTokenJson, null, 2);
   })
-    .then(response => {
-      return response.json()
-    })
-    .then(handleAccessToken)
 }
 
-var step4 = getEl('step4')
-var tokenResponseEl = getEl('access-token');
-var clientSecretEl2 = getEl('client-secret-2');
-var decodeBtn = getEl('decode-id')
+function updateUserInfoRequest() {
+  getEl('userinfo-req').innerText = `\
+GET ${data.server}/oauth/userinfo
 
-function handleAccessToken(accessTokenJson) {
-  tokenResponseEl.innerText = JSON.stringify(accessTokenJson, null, 2);
-  var { access_token, token_type, expires_in, id_token } = accessTokenJson
-
-  clientSecretEl2.value = clientSecretEl.innerText
-  // Update text field label 
-  M.updateTextFields();
-
-  decodeBtn.onclick = () => {
-    var decodedId = jwt.verify(id_token, clientSecretEl2.value)
-    onDecodedIdtoken(access_token, decodedId)
-  }
-
-  scrollToView(step4);
+Headers:
+  Authorization: Bearer ${data.accesstoken}\
+    `
 }
 
-var step5 = getEl('step5')
-var decodedIdEl = getEl('decoded-id')
-var userinfoUrlEl = getEl('userinfo-url')
-var userInfoBtn = getEl('userinfo-btn')
-function onDecodedIdtoken(accessToken, decodedId) {
-  decodedIdEl.innerText = JSON.stringify(decodedId, null, 2);
-  var url = `${server}/oauth/userinfo/${decodedId.sub}`
-  userinfoUrlEl.innerText = `\
-    Headers:
-      Authorization: Bearer ${accessToken}
-
-    GET ${server}/oauth/userinfo/<sub of user>
-    GET ${server}/oauth/userinfo/${decodedId.sub}
-  `
-  userInfoBtn.onclick = getUserInfo.bind(this, accessToken, url)
-  scrollToView(step5);
-}
-
-var step6 = getEl('step6')
-function getUserInfo(token, url) {
-  return fetch(url, {
+getEl('userinfo-test').onclick = function () {
+  return fetch(`${data.server}/oauth/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: 'Bearer ' + token
+      Authorization: 'Bearer ' + data.accesstoken
     }
+  }).then(function (response) {
+    return response.text()
+  }).then(function (jwe) {
+    getEl('userinfo-response-div').classList.remove('hidden')
+    getEl('userinfo-response').innerText = jwe
   })
-    .then(response => response.text())
-    .then(handleJwe)
-}
-
-var jweEl = getEl('jwe')
-var privateKeyEl2 = getEl('private-key-2')
-var decryptBtnEl = getEl('decrypt-btn')
-function handleJwe(jwe) {
-  jweEl.innerText = jwe
-  privateKeyEl2.innerText = privateKeyEl.innerText
-  decryptBtnEl.onclick = async () => {
-    var privateKey = await jose.JWK.asKey(privateKeyEl2.innerText, 'pem')
-    var decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe)
-    handleUserInfoJws(decrypted.payload.toString())
-  }
-  scrollToView(step6);
-}
-
-var step7 = getEl('step7')
-var step8 = getEl('step8')
-var userInfoEl = getEl('user-info')
-var jwsEl = getEl('jws')
-var decodeBtn2 = getEl('decode-btn')
-var startOver = getEl('start-over-btn')
-function handleUserInfoJws(jws) {
-  scrollToView(step7);
-  jwsEl.innerText = jws
-  decodeBtn2.onclick = () => {
-    var userInfo = jwt.verify(jws, clientSecretEl2.value)
-    userInfoEl.innerText = JSON.stringify(userInfo, null, 2)
-    scrollToView(step8);
-    startOver.onclick = () => {
-      window.location.href = '.'
-    }
-  }
-}
-
-function generateClientSnippet(url) {
-  return `
-  <button class="digic-login-btn">
-    <a href="${url}"> Sign in with Digital-ID</a>
-  </button>
-
-  `
-}
-
-function generateExpressSnippet(clientId, redirectUri) {
-  return `
-      var accessTokenJson = await got.post('${server}/oauth/token', {
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body:
-              querystring.stringify({
-                  grant_type: 'authorization_code',
-                  code: req.query.code,
-                  client_id: '${clientId}',
-                  client_secret: CLIENT_SECRET,
-                  redirect_uri: '${redirectUri}'
-              })
-
-      })
-
-      var { access_token, id_token } = JSON.parse(accessTokenJson.body)
-      var { sub } = jwt.verify(id_token, CLIENT_SECRET)
-      var jwe = await got('${server}/oauth/userinfo/' + sub, {
-          headers: {
-              Authorization: 'Bearer ' + access_token
-          }
-      })
-      var privateKey = await jose.JWK.asKey(PRIVATE_KEY, 'pem')
-      var decrypted = await jose.JWE.createDecrypt(privateKey).decrypt(jwe.body)
-      var userInfo = jwt.verify(decrypted.payload.toString(), CLIENT_SECRET)
-  `
 }

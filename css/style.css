@@ -33,8 +33,16 @@ pre code span {
   position: relative;
 }
 
-.copy-btn {
-  position: absolute;
-  right: 0;
+.code-div pre {
+  overflow: auto;
 }
 
+.copy-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.hidden {
+  display: none;
+}
