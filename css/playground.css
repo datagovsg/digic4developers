@@ -1,3 +1,35 @@
+/* general style */
+pre code,
+pre code span {
+  font-family: monospace !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-div {
+  position: relative;
+}
+
+.code-div pre {
+  overflow: auto;
+}
+
+.copy-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* end */
+
 .card {
   padding: 5vh 3vw;
 }
@@ -110,4 +142,8 @@ input[type="url"]:not(.browser-default):disabled {
 .dropdown-content {
   padding: 10px;
   max-height: 50vh;
+}
+
+.tooltips {
+  cursor: pointer;
 }

@@ -46,7 +46,8 @@
         <p class="param">redirect_uri</p>
         <p class="param-desc">Your registered callback url</p>
         <div class="param-input input-field col">
-          <input type="url" class="form-control" id="redirecturi" data-binding="redirecturi" placeholder="https://abc.xyz/callback">
+          <input type="url" class="form-control" id="redirecturi" data-binding="redirecturi"
+            placeholder="https://abc.xyz/callback">
         </div>
 
         <p class="param">purpose</p>
@@ -59,7 +60,8 @@
         <p class="param-desc">Requested scopes separated by space. openid is a required scope.</p>
         <div class="param-input input-field col">
           <input class="form-control" id="scope" placeholder="openid name dob">
-          <button class="btn waves-effect waves-light dropdown-trigger" data-target='scope-checkboxes'>Select Scopes</button>
+          <button class="btn waves-effect waves-light dropdown-trigger" data-target='scope-checkboxes'>Select
+            Scopes</button>
         </div>
         <form id="scope-checkboxes" class="dropdown-content">
         </form>
@@ -126,7 +128,8 @@
         <p class="param">redirect_uri</p>
         <p class="param-desc">Your registered callback url</p>
         <div class="param-input input-field col">
-          <input type="url" class="form-control" id="redirecturi2" data-binding="redirecturi" placeholder="https://abc.xyz/callback">
+          <input type="url" class="form-control" id="redirecturi2" data-binding="redirecturi"
+            placeholder="https://abc.xyz/callback">
         </div>
 
         <p class="param">grant_type</p>
@@ -137,7 +140,7 @@
             disabled>
         </div>
 
-        <p class="param">code</p>
+        <p class="param">code <i class="tiny material-icons tooltips" data-position="top" data-tooltip="Copy auth code returned in redirect url. e.g. https://example.com/callback?code=AUTH_CODE&state=123">help</i></p>
         <p class="param-desc">Authorization code returned in the callback url.</p>
         <div class="param-input input-field col">
           <input class="form-control" id="code" placeholder="randomstring">
@@ -181,7 +184,7 @@
         </p>
         <p class="param-desc">Authorization request header to transmit the access token</p>
         <div class="input-field col with-prefix">
-          <input type="text" class="form-control" id="clientsecret" placeholder="ACCESS_TOKEN"><span
+          <input type="text" class="form-control" id="accesstoken" placeholder="ACCESS_TOKEN"><span
             class="prefix">Bearer</span>
         </div>
 

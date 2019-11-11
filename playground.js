@@ -19,6 +19,7 @@ var scopeEl = getEl('scope')
 var stateEl = getEl('state')
 var clientSecretEl = getEl('clientsecret')
 var codeEl = getEl('code')
+var accessTokenEl = getEl('accesstoken')
 
 var data = {
   server: serverEl.value,
@@ -34,6 +35,8 @@ var data = {
 
 // STARTUP
 document.addEventListener('DOMContentLoaded', function () {
+  var tooltips = document.querySelectorAll('.tooltips');
+  M.Tooltip.init(tooltips);
   var elems = document.querySelectorAll('.dropdown-trigger');
   M.Dropdown.init(elems, { alignment: 'bottom', closeOnClick: false, constrainWidth: false });
   var elems = document.querySelectorAll('select')
@@ -44,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })
 window.onload = function () {
-  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl, clientIdEl2, redirectUriEl2].forEach(function (el) {
-    el.oninput = debouncedUpdate.bind(this)
-    el.onchange = debouncedUpdate.bind(this)
+  [serverEl, clientIdEl, redirectUriEl, purposeEl, scopeEl, stateEl, clientSecretEl, codeEl, clientIdEl2, redirectUriEl2, accessTokenEl].forEach(function (el) {
+    el.oninput = debouncedUpdate.bind(this, el)
+    el.onchange = debouncedUpdate.bind(this, el)
   })
   createAuthorizationUrl()
   updateTokenBody()
@@ -54,24 +57,22 @@ window.onload = function () {
   populateScopes()
 }
 
-var debouncedUpdate = function (event) {
-  return _.debounce(function () {
-    var id = event.srcElement.id.replace(/[0-9]/g, '')
-    data[id] = event.srcElement.value
-    createAuthorizationUrl()
-    updateTokenBody()
-    updateUserInfoRequest()
-    var dataBinding = event.srcElement.getAttribute("data-binding")
-    if (dataBinding) {
-      var sameEls = document.querySelectorAll(`[data-binding="${dataBinding}"]`)
-      sameEls.forEach(function(el) {
-        if (el !== event.srcElement) {
-          el.value = data[id]
-        }
-      })
-    }
-  }, 300)
-}
+var debouncedUpdate = _.debounce(function (element) {
+  var id = element.id.replace(/[0-9]/g, '')
+  data[id] = element.value
+  createAuthorizationUrl()
+  updateTokenBody()
+  updateUserInfoRequest()
+  var dataBinding = element.getAttribute("data-binding")
+  if (dataBinding) {
+    var sameEls = document.querySelectorAll(`[data-binding="${dataBinding}"]`)
+    sameEls.forEach(function (el) {
+      if (el !== element) {
+        el.value = data[id]
+      }
+    })
+  }
+}, 300)
 
 function createAuthorizationUrl() {
   var url = data.server + '/oauth/authorize\n\t'
@@ -80,7 +81,7 @@ function createAuthorizationUrl() {
     + '&purpose=' + encodeURIComponent(data.purpose) + '\n\t'
     + '&scope=' + encodeURIComponent(data.scope) + '\n\t'
     + '&response_type=code' + '\n\t'
-    + '&state=' + encodeURIComponent(data.state)
+    + (data.state.length ? '&state=' + encodeURIComponent(data.state) : '')
   getEl('auth-url').innerText = url
 }
 
